@@ -1,0 +1,14 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\pagenumbering{gobble}
+\begin{document}
+\begin{multline*}
+\lnot(\lnot x\wedge y\wedge\lnot z)\rightarrow(\lnot y\wedge(\lnot x\rightarrow \lnot(\lnot u\lor\lnot z)))\\
+\equiv(\lnot x\wedge y\wedge\lnot z)\lor(\lnot y\wedge(\lnot x\rightarrow \lnot(\lnot u\lor\lnot z)))\\
+\equiv(\lnot x\wedge y\wedge\lnot z)\lor(\lnot y\wedge( x\lor \lnot(\lnot u\lor\lnot z)))\\
+\equiv(\lnot x\wedge y\wedge\lnot z)\lor((\lnot y\wedge x) \lor (\lnot y\wedge\lnot(\lnot u\lor\lnot z))) \\
+\equiv(\lnot x\wedge y\wedge\lnot z)\lor((\lnot y\wedge x) \lor (\lnot y\wedge( u\wedge z))) \\
+\equiv(\lnot x\wedge y\wedge\lnot z)\lor(\lnot y\wedge x) \lor (\lnot y\wedge u\wedge z)
+\end{multline*}
+
+\end{document}
