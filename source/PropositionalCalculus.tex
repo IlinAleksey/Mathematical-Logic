@@ -1,0 +1,52 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+\begin{prooftree}
+
+							\AxiomC{$A \fCenter A$}
+						\LeftLabel{\scriptsize(утнч)}
+						\UnaryInfC{$A,(A\to B) \fCenter A$}
+					\LeftLabel{\scriptsize(перест)}
+					\UnaryInfC{$(A\to B),A \fCenter A$}
+						\AxiomC{$A\to B \fCenter A\to B$}
+					\LeftLabel{\scriptsize(утнч)}
+					\UnaryInfC{$(A\to B),A \fCenter A\to B$}
+				\LeftLabel{\scriptsize(mod pon)}
+				\BinaryInfC{$(A\to B),A \fCenter B$}
+			\LeftLabel{\scriptsize(утнч)}
+			\UnaryInfC{$(A\to B),A,(B\to C) \fCenter B$}
+		\LeftLabel{\scriptsize(перест)}
+		\UnaryInfC{$(A\to B),(B\to C),A \fCenter B$}
+					\AxiomC{$B\to C \fCenter B\to C$}
+				\RightLabel{\scriptsize(утнч)}
+				\UnaryInfC{$(B\to C),(A\to B) \fCenter B\to C$}
+			\RightLabel{\scriptsize(утнч)}
+			\UnaryInfC{$(B\to C),(A\to B),A \fCenter B\to C$}
+		\RightLabel{\scriptsize(перест)}
+		\UnaryInfC{$(A\to B),(B\to C),A \fCenter B\to C$}
+	\RightLabel{\scriptsize(mod pon)}
+	\BinaryInfC{$(A\to B),(B\to C),A\fCenter C$}
+\RightLabel{\scriptsize($\to$ введ)}
+\UnaryInfC{$(A\to B),(B\to C)\fCenter (A\to C)$}
+
+\end{prooftree}
+
+
+\begin{prooftree}
+		\Axiom$A\wedge B\fCenter A\wedge B$
+		\RightLabel{\scriptsize($\wedge$ удал прав)}
+	\UnaryInf$A\wedge B\fCenter A$
+	\RightLabel{\scriptsize($\to$ введ)}
+\UnaryInf$\fCenter (A\wedge B) \to A$
+\end{prooftree}
+\end{document}
