@@ -1,9 +1,15 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
 \documentclass[12pt,a4paper]{article}
+
+
 \usepackage[left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot]{geometry}
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english, russian]{babel}
-\usepackage{amsmath}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
 \usepackage{bussproofs}
 \pagenumbering{gobble}
 
@@ -41,7 +47,6 @@
 
 \end{prooftree}
 
-
 \begin{prooftree}
 		\Axiom$A\wedge B\fCenter A\wedge B$
 		\RightLabel{\scriptsize($\wedge$ удал прав)}
@@ -49,4 +54,343 @@
 	\RightLabel{\scriptsize($\to$ введ)}
 \UnaryInf$\fCenter (A\wedge B) \to A$
 \end{prooftree}
+
+$\boxed{\lnot A \lor \lnot B\fCenter \lnot(A\wedge B)}$ :
+
+\begin{prooftree}
+		
+	\AxiomC{$\lnot A \lor \lnot B \fCenter \lnot A \lor \lnot B$}
+		\AxiomC{$(1)$}
+	\UnaryInfC{$\lnot A \lor \lnot B, \lnot A \fCenter \lnot(A\wedge B)$}
+		\AxiomC{$(2)$}
+	\UnaryInfC{$\lnot A \lor \lnot B, \lnot B \fCenter \lnot(A\wedge B)$}
+		
+		
+\RightLabel{\scriptsize(уд $\lor$)}
+\TrinaryInfC{$\lnot A \lor \lnot B\fCenter \lnot(A\wedge B)$}
+\end{prooftree}
+
+$(1)$:
+\begin{prooftree}
+		\AxiomC{$\lnot A\fCenter \lnot A$}
+	\LeftLabel{\scriptsize(ут, ут, пер)}
+	\UnaryInfC{$\lnot A \lor \lnot B,\lnot A, \lnot\lnot(A\wedge B)  \fCenter \lnot A$}
+			\AxiomC{$\lnot\lnot(A\wedge B)  \fCenter A\wedge B$ - д.а.}
+		\RightLabel{\scriptsize(уд $\wedge$ прав)}
+		\UnaryInfC{$\lnot\lnot(A\wedge B)  \fCenter A$}
+	\RightLabel{\scriptsize(ут, ут, пер, пер)}
+	\UnaryInfC{$\lnot A \lor \lnot B,\lnot A, \lnot\lnot(A\wedge B)  \fCenter A$}
+\RightLabel{\scriptsize(не)}
+\BinaryInfC{$\lnot A \lor \lnot B, \lnot A \fCenter \lnot(A\wedge B)$}
+
+\end{prooftree}
+
+$(2)$:
+\begin{prooftree}
+		\AxiomC{$\lnot B\fCenter \lnot B$}
+	\LeftLabel{\scriptsize(ут, ут, пер)}
+	\UnaryInfC{$\lnot A \lor \lnot B,\lnot B, \lnot\lnot(A\wedge B)  \fCenter \lnot B$}
+			\AxiomC{$\lnot\lnot(A\wedge B)  \fCenter A\wedge B$ - д.а.}
+		\RightLabel{\scriptsize(уд $\wedge$ слев)}
+		\UnaryInfC{$\lnot\lnot(A\wedge B)  \fCenter B$}
+	\RightLabel{\scriptsize(ут, ут, пер, пер)}
+	\UnaryInfC{$\lnot A \lor \lnot B,\lnot B, \lnot\lnot(A\wedge B)  \fCenter B$}
+\RightLabel{\scriptsize(не)}
+\BinaryInfC{$\lnot A \lor \lnot B, \lnot A \fCenter \lnot(A\wedge B)$}
+
+\end{prooftree}
+
+$\boxed{\lnot A \wedge \lnot B\fCenter \lnot(A\lor B)}$ :
+
+\begin{prooftree}
+		
+	
+		\AxiomC{$\lnot A \wedge \lnot B \fCenter \lnot A \wedge \lnot B$}
+	\LeftLabel{\scriptsize(ут)}
+	\UnaryInfC{$\lnot A \wedge \lnot B, \lnot\lnot(A\lor B) \fCenter \lnot A \wedge \lnot B$}
+			\AxiomC{$(1)$}
+		\UnaryInfC{$ \lnot\lnot(A\lor B) \fCenter \lnot(\lnot A \wedge \lnot B)$}
+	\RightLabel{\scriptsize(ут, пер)}
+	\UnaryInfC{$\lnot A \wedge \lnot B, \lnot\lnot(A\lor B) \fCenter \lnot(\lnot A \wedge \lnot B)$}
+		
+		
+\RightLabel{\scriptsize(не)}
+\BinaryInfC{$\lnot A \wedge \lnot B\fCenter \lnot(A\lor B)$}
+\end{prooftree}
+
+
+$(1)$:
+\begin{prooftree}
+	
+	\AxiomC{$\lnot\lnot(A\lor B) \fCenter A \lor B$ д.а.}
+		\AxiomC{$(1.1)$}
+	\UnaryInfC{$ \lnot\lnot(A\lor B), A \fCenter \lnot(\lnot A \wedge \lnot B)$}
+		\AxiomC{$(1.2)$}
+	\UnaryInfC{$\lnot\lnot(A\lor B), B \fCenter \lnot(\lnot A \wedge \lnot B)$}
+		
+		
+\RightLabel{\scriptsize(уд $\lor$)}
+\TrinaryInfC{$\lnot\lnot(A\lor B) \fCenter \lnot(\lnot A \wedge \lnot B)$}
+\end{prooftree}
+
+$(1.1)$:
+\begin{prooftree}
+		\AxiomC{$A \fCenter A$}
+	\LeftLabel{\scriptsize(ут, ут, пер)}
+	\UnaryInfC{$ \lnot\lnot(A\lor B), A, \lnot\lnot(\lnot A \wedge \lnot B)\fCenter A$}
+			\AxiomC{$\lnot\lnot(\lnot A \wedge \lnot B) \fCenter \lnot A \wedge \lnot B$ д.а}
+		\RightLabel{\scriptsize(уд $\wedge$ справ)}
+		\UnaryInfC{$\lnot\lnot(\lnot A \wedge \lnot B) \fCenter \lnot A$}
+	\RightLabel{\scriptsize(ут, ут,пер, пер)}
+	\UnaryInfC{$ \lnot\lnot(A\lor B), A,\lnot\lnot(\lnot A \wedge \lnot B) \fCenter\lnot A$}
+\RightLabel{\scriptsize(не)}
+\BinaryInfC{$ \lnot\lnot(A\lor B), A \fCenter \lnot(\lnot A \wedge \lnot B)$}
+\end{prooftree}
+
+$(1.2)$:
+\begin{prooftree}
+		\AxiomC{$B \fCenter B$}
+	\LeftLabel{\scriptsize(ут, ут, пер)}
+	\UnaryInfC{$ \lnot\lnot(A\lor B), B, \lnot\lnot(\lnot A \wedge \lnot B)\fCenter B$}
+			\AxiomC{$\lnot\lnot(\lnot A \wedge \lnot B) \fCenter \lnot A \wedge \lnot B$ д.а.}
+		\RightLabel{\scriptsize(уд $\wedge$ справ)}
+		\UnaryInfC{$\lnot\lnot(\lnot A \wedge \lnot B) \fCenter \lnot B$}
+	\RightLabel{\scriptsize(ут, ут,пер, пер)}
+	\UnaryInfC{$ \lnot\lnot(A\lor B), B,\lnot\lnot(\lnot A \wedge \lnot B) \fCenter\lnot B$}
+\RightLabel{\scriptsize(не)}
+\BinaryInfC{$ \lnot\lnot(A\lor B), B \fCenter \lnot(\lnot A \wedge \lnot B)$}
+\end{prooftree}
+
+%ДИСТРИБУТИВНЫЕ ЗАКОНЫ
+
+$\boxed{(A\wedge B)\lor C \fCenter ((A\lor C)\wedge (B\lor C) )}$ :
+\begin{prooftree}
+	\AxiomC{$(A\wedge B)\lor C \fCenter (A\wedge B)\lor C$}
+		\AxiomC{$(1)$}
+	\UnaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter ...$}
+		\AxiomC{$(2)$}
+	\UnaryInfC{$(A\wedge B)\lor C, C \fCenter ...$}
+\RightLabel{\scriptsize(уд $\lor$)}
+\TrinaryInfC{$(A\wedge B)\lor C \fCenter ((A\lor C)\wedge (B\lor C) )$}
+
+\end{prooftree}
+
+
+
+$(1)$:
+\begin{prooftree}
+				\AxiomC{$A\wedge B \fCenter A\wedge B$}
+			\LeftLabel{\scriptsize( ут, пер)}
+			\UnaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter A\wedge B$}
+		\LeftLabel{\scriptsize(уд $\wedge$ слев)}
+		\UnaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter B$}
+	\LeftLabel{\scriptsize(введ $\lor$ справ)}
+	\UnaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter B\lor C$}
+				\AxiomC{$A\wedge B \fCenter A\wedge B $}
+			\RightLabel{\scriptsize(ут, пер)}
+			\UnaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter A\wedge B $}
+		\RightLabel{\scriptsize(уд $\wedge$ справ)}
+		\UnaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter A$}
+	\RightLabel{\scriptsize(введ $\lor$ справ)}
+	\UnaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter A\lor C$}
+\RightLabel{\scriptsize(введ $\wedge$)}
+\BinaryInfC{$(A\wedge B)\lor C, A\wedge B \fCenter ((A\lor C)\wedge (B\lor C)$}
+
+\end{prooftree}
+
+$(2)$:
+\begin{prooftree}
+			\AxiomC{$C \fCenter C$}
+		\LeftLabel{\scriptsize( ут, пер)}
+		\UnaryInfC{$(A\wedge B)\lor C, C \fCenter C$}
+	\LeftLabel{\scriptsize(введ $\lor$ слев)}
+	\UnaryInfC{$(A\wedge B)\lor C, C \fCenter B\lor C$}
+			\AxiomC{$C \fCenter C$}	
+		\RightLabel{\scriptsize(ут, пер)}
+		\UnaryInfC{$(A\wedge B)\lor C, C \fCenter C$}
+	\RightLabel{\scriptsize(введ $\lor$ слев)}
+	\UnaryInfC{$(A\wedge B)\lor C, C \fCenter A\lor C$}
+\RightLabel{\scriptsize(введ $\wedge$)}
+\BinaryInfC{$(A\wedge B)\lor C, C \fCenter ((A\lor C)\wedge (B\lor C)$}
+
+\end{prooftree}
+
+
+$\boxed{(A\lor B)\wedge C \fCenter ((A\wedge C)\lor (B\wedge C) )}$ :
+
+$\phi = ((A\wedge C)\lor (B\wedge C) )$
+
+$\psi = (A\wedge B)\lor C)$
+
+\begin{prooftree}
+		\AxiomC{$\psi \fCenter \psi$}
+	\LeftLabel{\scriptsize(уд $\wedge$ пр)}
+	\UnaryInfC{$\psi \fCenter A \lor B$}
+				\AxiomC{$(1)$}
+		\UnaryInfC{$(A\lor B)\wedge C, A \fCenter (A\wedge C)$}
+	\RightLabel{\scriptsize(в $\lor$ пр)}
+	\UnaryInfC{$(A\lor B)\wedge C, A \fCenter \phi$}
+				\AxiomC{$(2)$}
+		\UnaryInfC{$(A\lor B)\wedge C, B \fCenter (B\wedge C)$}
+	\RightLabel{\scriptsize(в $\lor$ лев)}
+	\UnaryInfC{$(A\lor B)\wedge C, B \fCenter \phi$}
+\RightLabel{\scriptsize(уд $\lor$)}
+\TrinaryInfC{$(A\lor B)\wedge C \fCenter ((A\wedge C)\lor (B\wedge C) )$}
+
+\end{prooftree}
+
+$(1)$:
+\begin{prooftree}
+		\AxiomC{$A \fCenter A$}
+	\LeftLabel{\scriptsize(введ $\wedge$)}
+	\UnaryInfC{$(A\lor B)\wedge C, A \fCenter A$}
+			\AxiomC{$(A\lor B)\wedge C \fCenter (A\lor B)\wedge C$}
+		\RightLabel{\scriptsize(ут)}
+		\UnaryInfC{$(A\lor B)\wedge C, A \fCenter (A\lor B)\wedge C$}
+	\RightLabel{\scriptsize(уд $\wedge$ лев)}
+	\UnaryInfC{$(A\lor B)\wedge C, A \fCenter C$}
+\RightLabel{\scriptsize(введ $\wedge$)}
+\BinaryInfC{$(A\lor B)\wedge C, A \fCenter (A\wedge C)$}
+\end{prooftree}
+
+$(2)$:
+\begin{prooftree}
+		\AxiomC{$B \fCenter B$}
+	\LeftLabel{\scriptsize(введ $\wedge$)}
+	\UnaryInfC{$(A\lor B)\wedge C, B \fCenter B$}
+			\AxiomC{$(A\lor B)\wedge C \fCenter (A\lor B)\wedge C$}
+		\RightLabel{\scriptsize(ут)}
+		\UnaryInfC{$(A\lor B)\wedge C, B \fCenter (A\lor B)\wedge C$}
+	\RightLabel{\scriptsize(уд $\wedge$ лев)}
+	\UnaryInfC{$(A\lor B)\wedge C, B \fCenter C$}
+\RightLabel{\scriptsize(введ $\wedge$)}
+\BinaryInfC{$(A\lor B)\wedge C, B \fCenter (B\wedge C)$}
+\end{prooftree}
+
+
+
+$\boxed{((A\wedge C)\lor (B\wedge C) )\fCenter (A\lor B)\wedge C}$ :
+
+$\phi = ((A\wedge C)\lor (B\wedge C) )$
+\begin{prooftree}
+	\AxiomC{$\phi \fCenter \phi$}
+		\AxiomC{$(1)$}
+	\UnaryInfC{$\phi, A\wedge C \fCenter (A\lor B)\wedge C$}
+		\AxiomC{$(2)$}
+	\UnaryInfC{$\phi, B\wedge C \fCenter (A\lor B)\wedge C$}
+\RightLabel{\scriptsize(уд $\lor$)}
+\TrinaryInfC{$\phi\fCenter (A\lor B)\wedge C$}
+
+\end{prooftree}
+
+$(1)$:
+\begin{prooftree}
+				\AxiomC{$ A\wedge C \fCenter A\wedge C$}
+			\LeftLabel{\scriptsize(ут, пер)}
+			\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), A\wedge C \fCenter A\wedge C$}
+		\LeftLabel{\scriptsize(уд $\wedge$ прав)}
+		\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), A\wedge C \fCenter A$}
+	\LeftLabel{\scriptsize(введ $\lor$ лев)}
+	\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), A\wedge C \fCenter A\lor B$}
+			\AxiomC{$A\wedge C \fCenter A\wedge C$}
+		\RightLabel{\scriptsize(ут, пер)}
+		\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), A\wedge C \fCenter A\wedge C$}
+	\RightLabel{\scriptsize(уд $\wedge$ лев)}
+	\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), A\wedge C \fCenter C$}
+\RightLabel{\scriptsize(введ $\wedge$)}
+\BinaryInfC{$((A\wedge C)\lor (B\wedge C) ), A\wedge C \fCenter (A\lor B)\wedge C$}
+
+\end{prooftree}
+
+$(2)$:
+\begin{prooftree}
+				\AxiomC{$ B\wedge C \fCenter B\wedge C$}
+			\LeftLabel{\scriptsize(ут, пер)}
+			\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), B\wedge C \fCenter B\wedge C$}
+		\LeftLabel{\scriptsize(уд $\wedge$ прав)}
+		\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), B\wedge C \fCenter B$}
+	\LeftLabel{\scriptsize(введ $\lor$ лев)}
+	\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), B\wedge C \fCenter A\lor B$}
+			\AxiomC{$B\wedge C \fCenter B\wedge C$}
+		\RightLabel{\scriptsize(ут, пер)}
+		\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), B\wedge C \fCenter B\wedge C$}
+	\RightLabel{\scriptsize(уд $\wedge$ лев)}
+	\UnaryInfC{$((A\wedge C)\lor (B\wedge C) ), B\wedge C \fCenter C$}
+\RightLabel{\scriptsize(введ $\wedge$)}
+\BinaryInfC{$((A\wedge C)\lor (B\wedge C) ), B\wedge C \fCenter (A\lor B)\wedge C$}
+
+\end{prooftree}
+
+\begin{lemma}
+Если $\phi \fCenter \psi$ выводима, то из $\Gamma \fCenter \phi$ можно вывести $\Gamma \fCenter \psi$
+\begin{proof} 
+
+\begin{prooftree}
+		\AxiomC{$\phi \fCenter \psi$}
+	\UnaryInfC{$\fCenter \phi \to \psi$}
+	\UnaryInfC{$...$}
+\UnaryInfC{$\Gamma\fCenter \phi \to \psi$}
+\AxiomC{$\Gamma \fCenter \phi$}
+\BinaryInfC{$\Gamma \fCenter \psi$}
+\end{prooftree}
+
+\end{proof}
+\end{lemma}
+
+
+\begin{lemma}
+Если $\psi \fCenter \phi$ выводима, то из $\Gamma,\phi \fCenter \theta$ можно вывести $\Gamma,\psi \fCenter \theta$
+\begin{proof}
+
+\begin{prooftree}
+		\AxiomC{$\psi \fCenter \phi$}
+		\UnaryInfC{$...$}
+	\UnaryInfC{$\Gamma, \psi \fCenter \phi$}
+	
+\AxiomC{$\Gamma,\phi \fCenter \theta$}
+\UnaryInfC{$\Gamma \fCenter \phi \to \theta$}
+\UnaryInfC{$\Gamma, \psi \fCenter \phi \to \theta$}
+\BinaryInfC{$\Gamma,\psi \fCenter \theta$}
+\end{prooftree}
+
+\end{proof}
+\end{lemma}
+
+$\boxed{((A\lor C)\wedge (B\lor C) ) \fCenter (A\wedge B)\lor C}$ :
+
+$\phi = ((A\wedge C)\lor (B\wedge C) )$
+
+$\psi = (A\wedge B)\lor C)$
+
+\begin{prooftree}
+		\AxiomC{$\phi \fCenter \phi$}
+	\LeftLabel{\scriptsize(ут)}
+	\UnaryInfC{$\phi, \lnot\psi \fCenter \phi$}
+									\AxiomC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot(A\wedge B) \wedge \lnot C$}
+								\LeftLabel{\scriptsize(уд $\wedge$ слев)}
+								\UnaryInfC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot C$}
+							\LeftLabel{\scriptsize(введ $\lor$ слев)}
+							\UnaryInfC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot A\lor \lnot C$}
+						\LeftLabel{\scriptsize(лем2, морган)}
+						\UnaryInfC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot(A\wedge C)$}
+									\AxiomC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot(A\wedge B) \wedge \lnot C$}
+								\RightLabel{\scriptsize(уд $\wedge$ слев)}
+								\UnaryInfC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot C$}
+							\RightLabel{\scriptsize(введ $\lor$ слев)}
+							\UnaryInfC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot B\lor \lnot C$}
+						\RightLabel{\scriptsize(лем2, морган)}
+						\UnaryInfC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot(B\wedge C)$}
+					\RightLabel{\scriptsize(введ $\wedge$)}
+					\BinaryInfC{$\lnot(A\wedge B) \wedge \lnot C \fCenter \lnot(A\wedge C) \wedge \lnot(B\wedge C)$}
+				\RightLabel{\scriptsize(лем1, морган)}
+				\UnaryInfC{$\lnot\psi \fCenter \lnot(A\wedge C) \wedge \lnot(B\wedge C)$}
+			\RightLabel{\scriptsize(лем2, морган)}
+			\UnaryInfC{$\lnot\psi \fCenter \lnot\phi$}
+		
+	\RightLabel{\scriptsize(ут, пер)}
+	\UnaryInfC{$\phi, \lnot\psi \fCenter \lnot\phi$}
+\RightLabel{\scriptsize(не)}
+\BinaryInfC{$\phi \fCenter \psi$}
+\end{prooftree}
+
 \end{document}
