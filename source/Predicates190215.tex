@@ -1,0 +1,43 @@
+\documentclass[12pt]{article}
+\usepackage[T1,T2A,T2B,T2C]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath}
+\begin{document}
+Дана алгебраическая система $A=(\{a,b,c\};P^{(2)})$
+\begin{table}[h]
+\begin{tabular}{|c|c|c|c|}
+\hline 
+$P_A$ & $a$ & $b$ & $c$ \\ 
+\hline 
+$a$ & $1$ & $0$ & $1$ \\ 
+\hline 
+$b$ & $1$ & $1$ & $1$ \\ 
+\hline 
+$c$ & $0$ & $1$ & $1$ \\ 
+\hline 
+\end{tabular} 
+\end{table}
+
+Найти значение $\varphi=(\forall x)(\exists y)(P(x,y)\wedge (\exists z)P(y,z))$.
+\begin{multline*}
+\sigma(\varphi)=\sigma(\forall x)(\exists y)(P(x,y)\wedge (\exists z)P(y,z))=(\sigma)^x_{\alpha}(\exists y)(P(x,y)\wedge (\exists z)P(y,z))=\\
+((\sigma)^x_{\alpha})^y_{\beta}(P(x,y)\wedge (\exists z)P(y,z))=(((\sigma)^x_{\alpha})^y_{\beta})^z_{\gamma}(P(x,y)\wedge P(y,z))
+\end{multline*}
+Для каждого $\alpha$ существуют такие $\beta$ и $\gamma$, что $(((\sigma)^x_{\alpha})^y_{\beta})^z_{\gamma}(P(x,y)\wedge P(y,z))=1$
+\begin{enumerate}
+\item если $\alpha = a$, то при $\beta = a$ и $\gamma = a$ $P(\alpha,\beta)\wedge P(\beta,\gamma)=1$
+\item если $\alpha = b$, то при $\beta = b$ и $\gamma = b$ $P(\alpha,\beta)\wedge P(\beta,\gamma)=1$
+\item если $\alpha = c$, то при $\beta = b$ и $\gamma = b$ $P(\alpha,\beta)\wedge P(\beta,\gamma)=1$
+\end{enumerate}
+Из этого следует, что 
+$$(((\sigma)^x_{\alpha})^y_{\beta})^z_{\gamma}(P(x,y)\wedge P(y,z))=1$$
+
+Найти значение $\varphi = (\exists y)(\forall x)((\exists y)P(x,y)\to P(y,x))$
+\begin{multline*}
+\sigma(\varphi)=\sigma(\exists y)(\forall x)((\exists y)P(x,y)\to P(y,x))=((\sigma)^y_{\alpha})^x_{\beta}((\sigma)^y_{\gamma}P(x,y)\to P(y,x))
+\end{multline*}
+Существует $\alpha$ , что для каждого $\beta$ существует $\gamma$ такой что $(((\sigma)^y_{\alpha})^x_{\beta}((\sigma)^y_{\gamma}P(x,y)\to P(y,x))=1$. Рассмотрим $\alpha = b$, тогда при любом $\beta$ $P(\alpha,\beta)=1$. Следствие истинно, значит вся импликация истинна. Из этого следует
+$$(((\sigma)^y_{\alpha})^x_{\beta}((\sigma)^y_{\gamma}P(x,y)\to P(y,x))=1$$
+
+\end{document}
