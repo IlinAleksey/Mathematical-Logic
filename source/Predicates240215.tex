@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+\usepackage[T1,T2A,T2B,T2C]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amssymb,amsthm,amscd,amsfonts,mathrsfs,amsthm}
+\begin{document}
+Даны алгебраическая системы одной сигнатуры $\Sigma = (P^{(2)})$ $A=(\{a,b,c\};P_A^{(2)})$ и $B=(\{a,b,c\};P_B^{(2)})$
+
+\begin{table}[h]
+\begin{tabular}{|c|c|c|c|}
+\hline 
+$P_A$ & $a$ & $b$ & $c$ \\ 
+\hline 
+$a$ & $1$ & $0$ & $1$ \\ 
+\hline 
+$b$ & $1$ & $1$ & $1$ \\ 
+\hline 
+$c$ & $0$ & $1$ & $1$ \\ 
+\hline 
+\end{tabular}$\quad$ 
+\begin{tabular}{|c|c|c|c|}
+\hline 
+$P_B$ & $a$ & $b$ & $c$ \\ 
+\hline 
+$a$ & $1$ & $0$ & $1$ \\ 
+\hline 
+$b$ & $1$ & $1$ & $0$ \\ 
+\hline 
+$c$ & $0$ & $1$ & $1$ \\ 
+\hline 
+\end{tabular} 
+\end{table}
+Найти формулу $\varphi$ такую, что $\sigma_A((\exists x)(\forall y)\varphi)=0$ и $\sigma_B((\forall y)(\exists x)\varphi)=1$. Этой формулой является
+$$\varphi = P(x,y)\wedge P(y,x)$$
+\begin{proof}
+Рассмотрим $\sigma_A((\exists x)(\forall y)\varphi)$.
+\begin{enumerate}
+\item если $\sigma_A(x)=a$, то при $\sigma_A(y)=c$ будет $\sigma_A(P(x,y))=1$, а $\sigma(P(y,x))=0$, следовательно $\sigma(\varphi)=0$
+\item если $\sigma_A(x)=b$, то при $\sigma_A(y)=a$ будет $\sigma_A(P(x,y))=1$, а $\sigma(P(y,x))=0$, следовательно $\sigma(\varphi)=0$
+\item если $\sigma_A(x)=c$, то при $\sigma_A(y)=a$ будет $\sigma_A(P(x,y))=0$, а $\sigma(P(y,x))=1$, следовательно $\sigma(\varphi)=0$
+\end{enumerate}
+Из этого следует,  что $\sigma_A((\exists x)(\forall y)\varphi)=0$.
+
+Рассмотрим $\sigma_B((\forall y)(\exists x)\varphi)$.
+\begin{enumerate}
+\item если $\sigma_B(y)=a$, то при $\sigma_B(x)=a$ будет $\sigma_A(P(x,y))=1$, а $\sigma(P(y,x))=1$, следовательно $\sigma(\varphi)=1$
+\item если $\sigma_B(y)=b$, то при $\sigma_B(x)=b$ будет $\sigma_A(P(x,y))=1$, а $\sigma(P(y,x))=1$, следовательно $\sigma(\varphi)=1$
+\item если $\sigma_B(y)=c$, то при $\sigma_B(x)=c$ будет $\sigma_A(P(x,y))=1$, а $\sigma(P(y,x))=1$, следовательно $\sigma(\varphi)=1$
+\end{enumerate}
+Из этого следует,  что $\sigma_B((\forall y)(\exists x)\varphi)=1$.
+\end{proof}
+\begin{enumerate}
+\item Формула, которая истинна на состояниях $\sigma$ таких, что $\sigma(x)$ - чётное
+$$(\exists z)2\cdot z\approx x$$
+\item Формула, которая истинна на состояниях $\sigma$ таких, что $\sigma(x)$ - простое
+$$(\forall z)(\forall y)(z\cdot y\approx x\to(z\approx 1 \vee y\approx 1))$$
+\item Формула, которая истинна на состояниях $\sigma$ таких, что $\sigma(x)<\sigma(y)$
+$$(\exists z)(\neg(z\approx 0)\wedge x+z\approx y)$$
+\item Формула, которая истинна на состояниях $\sigma$ таких, что $\sigma(z)$ делит $\sigma(x)$ и $\sigma(y)$
+$$(\exists a)(\exists b)(a\cdot z\approx x \wedge b\cdot z\approx y)$$
+\item Формула, которая истинна на состояниях $\sigma$ таких, что $\sigma(x)$ и $\sigma(y)$ - взаимно простые
+$$(\forall z)(\exists a)(\exists b)((a\cdot z\approx x \wedge b\cdot z\approx y) \to z\approx 1)$$
+\item Формула, которая истинна в алгебраических системах, в которых выполняется дистрибутивность сложения относительно умножения
+$$(\forall a)(\forall b)(\forall c)((a+b)\cdot c\approx (a\cdot c)+(b\cdot c))$$
+\item Формула, которая истинна в алгебраических системах, в которых существует самое большое простое число
+\begin{multline*}
+(\exists x)((\forall z)(\forall y)(z\cdot y\approx x\to(z\approx 1 \vee y\approx 1))\to\\ (\forall u)((\forall z)(\forall y)(z\cdot y\approx u\to(z\approx 1 \vee y\approx 1))\to\\ (\exists v)(\neg(v\approx 0)\wedge u+v\approx x)))
+\end{multline*}
+\end{enumerate}
+\end{document}
