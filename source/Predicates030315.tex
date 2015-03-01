@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+\usepackage[T1,T2A,T2B,T2C]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amssymb,amsthm,amscd,amsfonts,mathrsfs,amsthm}
+\usepackage{array} 
+
+\newcommand*{\TitleParbox}[1]{\parbox[c]{2.40cm}{\raggedright #1}}
+
+\newcolumntype{C}[1]{%
+ >{\vbox to 5ex\bgroup\vfill\centering}%
+ p{#1}%
+ <{\egroup}} 
+\begin{document}
+Дана сигнатура 
+$$\Sigma = \langle E^{(4)},S^{(2)};5^{(0)},3^{(0)},2^{(0)}\rangle$$ 
+,множество 
+\begin{multline*}
+A=\{\text{номера группы}\}\cup\{\text{номера студенческих билетов}\}\cup\{\text{имена преподавателей}\}\\
+\cup\{\text{коды предметов}\}\cup\{\text{оценки}\}\cup
+\end{multline*}
+и алгебраическая система $\mathcal{A}=(\Sigma,A)$, где
+\begin{table}[h]
+\begin{tabular}{|c|m{3cm}|m{3cm}|m{3cm}|c|}
+\hline 
+$E_A$ & студенческий билет & номер предмета & имя преподавателя & оценка\\[2ex]
+\hline 
+ &  &  &  &  \\ 
+\hline 
+\end{tabular}$\quad$ 
+\end{table}
+\begin{table}[h]
+\begin{tabular}{|c|m{3cm}|m{3cm}|}
+\hline 
+$S_A$ & студенческий билет & номер группы \\[2ex]
+\hline 
+ &  &    \\ 
+\hline 
+\end{tabular}$\quad$ 
+\end{table}
+
+и $5_A, 3_A, 2_A$ - оценки.
+\begin{enumerate}
+\item написать формулу, которая истинна, если $x$ - номер студенческого билета
+$$(\exists subject)(\exists teacher)(\exists grade)(E(x,subject,teacher,grade))$$
+\item написать формулу, которая истинна, если все студенты отличники
+$$(\forall ID)(\forall subject)(\forall teacher)(\forall grade)(E(ID,subject,teacher,grade)\to grade\approx 5)$$
+\item написать формулу, которая истинна, если есть отличники в каждой группе
+\begin{multline*}
+(\forall group)(\exists ID)(S(ID,group)\wedge \\((\forall subject)(\forall teacher)(\forall grade)E(ID,subject,teacher,grade)\to grade\approx 5))
+\end{multline*}
+\item написать формулу, которая истинна, если есть преподаватель, который ставит только двойки
+\begin{multline*}
+(\exists teacher)(\forall ID)(\forall subject)(\forall grade)\\(E(ID,subject,teacher,grade)\to grade\approx 2))
+\end{multline*}
+\end{enumerate}
+\end{document}
