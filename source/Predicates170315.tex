@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage[T1,T2A,T2B,T2C]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amssymb,amsthm,amscd,amsfonts,mathrsfs,amsthm}
+\usepackage{array} 
+\usepackage[a4paper,margin=1in,landscape]{geometry}
+\newcommand*{\TitleParbox}[1]{\parbox[c]{2.40cm}{\raggedright #1}}
+
+\newcolumntype{C}[1]{%
+ >{\vbox to 5ex\bgroup\vfill\centering}%
+ p{#1}%
+ <{\egroup}} 
+\begin{document}
+\delimitershortfall=-1pt
+Дана сигнатура 
+$$\Sigma = \langle E^{(4)},S^{(2)};5^{(0)},3^{(0)},2^{(0)}\rangle,$$ 
+множество 
+\begin{multline*}
+A=\{\text{номера группы}\}\cup\{\text{номера студенческих билетов}\}\cup
+\{\text{имена преподавателей}\}\cup\{\text{коды предметов}\}\cup\{\text{оценки}\}
+\end{multline*}
+и алгебраическая система $\mathcal{A}=(\Sigma,A)$, где
+\begin{table}[h]
+\begin{tabular}{|c|m{3cm}|m{3cm}|m{3cm}|c|}
+\hline 
+$E_A$ & студенческий билет & номер предмета & имя преподавателя & оценка\\[2ex]
+\hline 
+ &  &  &  &  \\ 
+\hline 
+\end{tabular}$\quad$ 
+\end{table}
+\begin{table}[h]
+\begin{tabular}{|c|m{3cm}|c|}
+\hline 
+$S_A$ & студенческий билет & номер группы \\[2ex]
+\hline 
+ &  &   \\ 
+\hline 
+\end{tabular}$\quad$ 
+\end{table}
+
+и $5_A, 3_A, 2_A$ - оценки.
+\begin{enumerate}
+\item Преподаватель ставит хотя бы по одной 5 в каждой группе.
+\begin{multline*}
+(\forall group)
+(\forall ID)\Big(S(ID, group)\to (\exists ID)(\exists subject)(\exists grade)\big(S(ID, group)\wedge E(ID,subject,x,grade) \wedge grade \approx 5\big)\Big)
+\end{multline*}
+\item В каждой группе больше 1 но меньше 4 отличников.
+\begin{multline*}
+(\forall group)(\forall ID)\bigg(S(ID, group)\to(\exists A1)(\exists A2)\Big(A1 \not\approx A2 \wedge \\
+(\exists subject)(\exists teacher)\big(E(A1,subject,teacher,5)\big)\wedge 
+(\exists subject)(\exists teacher)\big(E(A2,subject,teacher,5)\big)\wedge \\
+(\forall ID)\big(S(ID, group)\wedge(\exists subject)(\exists teacher)\big(E(ID,subject,teacher,5)\big) \to\\
+ (ID\approx A1 \vee ID\approx A2)\big)\Big)\bigg)\\
+\vee\\
+(\forall group)(\forall ID)\bigg(S(ID, group)\to(\exists A1)(\exists A2)(\exists A3)\Big((A1 \not\approx A2) \wedge (A1 \not\approx A3) \wedge (A2 \not\approx A3) \wedge\\
+(\exists subject)(\exists teacher)\big(E(A1,subject,teacher,5)\big)\wedge 
+(\exists subject)(\exists teacher)\big(E(A2,subject,teacher,5)\big)\wedge \\
+(\exists subject)(\exists teacher)\big(E(A3,subject,teacher,5)\big)\wedge \\
+(\forall ID)\big(S(ID, group)\to (ID\approx A1 \vee ID\approx A2 \vee ID\approx A3)\big)\Big)\bigg)
+\end{multline*}
+\item Есть ровно 1 группа, в которой есть хотя бы 2 кандидата на отчисление. $F_s=1$, если $\sigma(id)$ - студент на отчисление, $F_s=0$ иначе.
+\begin{multline*}
+(\exists group)(\exists ID)\Bigg((S(ID, group)\wedge (\exists F1)(\exists F2)\big(S(F1,group)\wedge S(F1,group)\wedge(F1 \not\approx F2) \wedge
+(\exists id)(id\approx F1 \wedge F_s)\wedge (\exists id)(id\approx F2 \wedge F_s)\big) \wedge\\
+ \neg\bigg((\exists group2)(\exists ID)\Big(S(ID, group)\wedge group\not\approx group2 \wedge(\exists F1)(\exists F2)\big(S(F1,group2)\wedge S(F1,group2)\wedge(F1 \not\approx F2) \wedge\\
+  (\exists id)(id\approx F1 \wedge F_s)\wedge (\exists id)(id\approx F2 \wedge F_s)\big) \Big)\bigg)\Bigg)
+\end{multline*}
+\item Нет групп, в которых не было бы хорошистов
+\begin{multline*}
+(\forall group)(\forall ID)(S(ID, group)\to (\exists ID)(S(ID, group)\wedge (\exists subject)(\exists teacher)(\exists grade)(E(ID,subject,teacher, grade)\wedge\\
+ grade \not\approx 2 \wedge grade \not\approx 3 \wedge grade \not\approx 5 )))
+\end{multline*}
+\end{enumerate}
+\end{document}
