@@ -1,0 +1,51 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+\begin{enumerate}
+\item Вывести $(\exists x)(A\wedge B) \fCenter (\exists x)A \wedge (\exists x)B$
+\begin{prooftree}
+				\AxiomC{$A\wedge B \fCenter A\wedge B$}
+			\LeftLabel{\scriptsize(уд $\wedge$ пр)}
+			\UnaryInfC{$A\wedge B \fCenter A$}
+		\LeftLabel{\scriptsize(вв $\exists$ пр)}
+		\UnaryInfC{$A\wedge B\fCenter (\exists x)A$}
+	\LeftLabel{\scriptsize(вв $\exists$ лев)}
+	\UnaryInfC{$(\exists x)(A\wedge B)\fCenter (\exists x)A$}
+				\AxiomC{$A\wedge B \fCenter A\wedge B$}
+			\RightLabel{\scriptsize(уд $\wedge$ лев)}
+			\UnaryInfC{$A\wedge B \fCenter B$}
+		\RightLabel{\scriptsize(вв $\exists$ пр)}
+		\UnaryInfC{$A\wedge B\fCenter (\exists x)B$}
+	\RightLabel{\scriptsize(вв $\exists$ лев)}
+	\UnaryInfC{$(\exists x)(A\wedge B)\fCenter (\exists x)B$}
+\RightLabel{\scriptsize(вв $\wedge$)}
+\BinaryInfC{$(\exists x)(A\wedge B) \fCenter (\exists x)A \wedge (\exists x)B$}
+\end{prooftree}
+\item Вывести $\fCenter s \approx s$, где $s$ - терм.
+
+Выводится, используя правило дополнительной конкретизации правилу дополнительной конкретизации
+\begin{prooftree}
+	\AxiomC{$\fCenter x \approx x$}
+\UnaryInfC{$\fCenter (x \approx x)^x_s$}
+\end{prooftree}
+\end{enumerate}
+
+
+
+\end{document}
