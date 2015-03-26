@@ -1,0 +1,104 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot, landscape,paperheight=33in]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+\begin{enumerate}
+\item Вывести $(\exists x)(A\wedge B) \fCenter (\exists x)A \wedge (\exists x)B$
+\begin{prooftree}
+				\AxiomC{$A\wedge B \fCenter A\wedge B$}
+			\LeftLabel{\scriptsize(уд $\wedge$ пр)}
+			\UnaryInfC{$A\wedge B \fCenter A$}
+		\LeftLabel{\scriptsize(вв $\exists$ пр)}
+		\UnaryInfC{$A\wedge B\fCenter (\exists x)A$}
+	\LeftLabel{\scriptsize(вв $\exists$ лев)}
+	\UnaryInfC{$(\exists x)(A\wedge B)\fCenter (\exists x)A$}
+				\AxiomC{$A\wedge B \fCenter A\wedge B$}
+			\RightLabel{\scriptsize(уд $\wedge$ лев)}
+			\UnaryInfC{$A\wedge B \fCenter B$}
+		\RightLabel{\scriptsize(вв $\exists$ пр)}
+		\UnaryInfC{$A\wedge B\fCenter (\exists x)B$}
+	\RightLabel{\scriptsize(вв $\exists$ лев)}
+	\UnaryInfC{$(\exists x)(A\wedge B)\fCenter (\exists x)B$}
+\RightLabel{\scriptsize(вв $\wedge$)}
+\BinaryInfC{$(\exists x)(A\wedge B) \fCenter (\exists x)A \wedge (\exists x)B$}
+\end{prooftree}
+\item Вывести $\fCenter s \approx s$, где $s$ - терм.
+
+Выводится, используя правило дополнительной конкретизации правилу дополнительной конкретизации
+\begin{prooftree}
+	\AxiomC{$\fCenter x \approx x$}
+\UnaryInfC{$\fCenter (x \approx x)^x_s$}
+\end{prooftree}
+\end{enumerate}
+
+\newpage
+
+\begin{enumerate}
+\item Вывести $(\exists x)(\exists y)\psi \fCenter (\exists y)(\exists x)\psi$
+\begin{prooftree}
+				\AxiomC{$\psi \fCenter \psi$}
+			\RightLabel{\scriptsize(вв $\exists$ прав)}
+			\UnaryInfC{$\psi \fCenter (\exists x)\psi$}
+		\RightLabel{\scriptsize(вв $\exists$ прав)}
+		\UnaryInfC{$\psi \fCenter (\exists y)(\exists x)\psi$}
+	\RightLabel{\scriptsize(вв $\exists$ лев)}
+	\UnaryInfC{$(\exists y)\psi \fCenter (\exists y)(\exists x)\psi$}
+\RightLabel{\scriptsize(вв $\exists$ лев)}
+\UnaryInfC{$(\exists x)(\exists y)\psi \fCenter (\exists y)(\exists x)\psi$}
+\end{prooftree}
+\item Вывести $(\exists x)\varphi \to (\forall x)\psi \fCenter (\forall x)(\varphi \to \psi)$
+\begin{prooftree}
+				
+				
+							\AxiomC{$\varphi \fCenter \varphi$}
+						\UnaryInfC{$\varphi \fCenter (\exists x)\varphi$}
+					\UnaryInfC{$(\exists x)\varphi \to (\forall x)\psi, \varphi \fCenter (\exists x)\varphi$}
+					\AxiomC{$(\exists x)\varphi \to (\forall x)\psi \fCenter (\exists x)\varphi \to (\forall x)\psi$}
+					\UnaryInfC{$(\exists x)\varphi \to (\forall x)\psi, \varphi \fCenter (\exists x)\varphi \to (\forall x)\psi$}
+				\BinaryInfC{$(\exists x)\varphi \to (\forall x)\psi, \varphi \fCenter (\forall x)\psi$}
+			\RightLabel{\scriptsize()}
+			\UnaryInfC{$(\exists x)\varphi \to (\forall x)\psi, \varphi \fCenter (\forall x)\neg \varphi \vee (\forall x)\psi$}
+								\AxiomC{$\varphi \fCenter \varphi$}
+							\UnaryInfC{$...$}
+						\UnaryInfC{$\varphi, (\forall x)\neg \varphi, \neg\psi \fCenter  \varphi$}
+									\AxiomC{$\neg \varphi \fCenter \neg \varphi $}
+								\UnaryInfC{$(\forall x)\neg \varphi \fCenter \neg \varphi $}
+							\UnaryInfC{$...$}
+						\UnaryInfC{$\varphi, (\forall x)\neg \varphi, \neg\psi \fCenter \neg \varphi $}
+					\BinaryInfC{$\varphi, (\forall x)\neg \varphi \fCenter  \psi$}
+				\UnaryInfC{$...$}
+			\UnaryInfC{$(\exists x)\varphi \to (\forall x)\psi, \varphi, (\forall x)\neg \varphi \fCenter  \psi$}
+						\AxiomC{$\psi \fCenter \psi$}
+					\RightLabel{\scriptsize(вв $\forall $ лев}
+					\UnaryInfC{$(\forall x)\psi \fCenter \psi $}
+			\RightLabel{\scriptsize(ут, ут, пер, пер}
+			\UnaryInfC{$(\exists x)\varphi \to (\forall x)\psi, \varphi, (\forall x)\psi \fCenter \psi $}
+		\RightLabel{\scriptsize(уд $\vee$)}
+		\TrinaryInfC{$(\exists x)\varphi \to (\forall x)\psi, \varphi \fCenter \psi$}
+	\RightLabel{\scriptsize(вв $\to$)}
+	\UnaryInfC{$(\exists x)\varphi \to (\forall x)\psi \fCenter \varphi \to \psi$}
+\RightLabel{\scriptsize(вв $\forall$ пр)}
+\UnaryInfC{$(\exists x)\varphi \to (\forall x)\psi \fCenter (\forall x)(\varphi \to \psi)$}
+\end{prooftree}
+\item Вывести $(\forall y)\psi \fCenter (\forall x)(\psi)^x_y$
+
+\end{enumerate}
+
+
+\end{document}
