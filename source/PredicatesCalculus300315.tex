@@ -1,0 +1,58 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot, landscape,paperheight=15in]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+\begin{enumerate}
+\item Вывести $\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta \fCenter (\exists y)\theta \to (\forall x)[(\exists z)\neg \psi \vee \varphi]$
+\begin{prooftree}
+				
+				\AxiomC{}
+			\UnaryInfC{$\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta, (\exists y)\theta \fCenter (\forall z)\neg \psi \vee \neg\varphi$}
+				\AxiomC{}
+			\UnaryInfC{$\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta, (\exists y)\theta \fCenter (\forall x)(\neg(\varphi \wedge (\exists x)\psi)) \to (\forall z)\neg \psi \vee \neg\varphi$}
+		\BinaryInfC{$\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta, (\exists y)\theta \fCenter (\forall z)\neg \psi \vee \neg\varphi$}
+	\UnaryInfC{$\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta, (\exists y)\theta \fCenter (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$}
+\UnaryInfC{$\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta \fCenter (\exists y)\theta \to (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$}
+\end{prooftree}
+\item Доказать что введение $\exists$ слева обратимо.
+Сначала докажем, что $(\exists x)\varphi \fCenter \varphi$ выводимо:
+\begin{prooftree}
+	\AxiomC{$\varphi \fCenter \varphi$}
+\RightLabel{\scriptsize(вв $\exists$ лев)}
+\UnaryInfC{$(\exists x)\varphi \fCenter \varphi$}
+\end{prooftree}
+Теперь можно воспользоваться допустимым правилом:
+\begin{prooftree}
+	\AxiomC{$\Gamma, (\exists x)\varphi \fCenter \psi$}
+\RightLabel{\scriptsize(доп. выв.)}	
+\UnaryInfC{$\Gamma, \varphi \fCenter \psi$}
+\end{prooftree}
+\item Доказать что введение $\exists$ справа необратимо. Рассмотрим сигнатуру $\Sigma = (\leq^{(2)};+^{(2)},0^{(0)},1^{(0)})$ и алгебраическую систему в этой сигнатуре: $\mathcal{A}=(\omega, \leq; +, 0, 1)$.
+
+Пусть "введение $\exists$ справа" - обратимое правило, тогда верно
+
+\begin{prooftree}
+	\AxiomC{$ \fCenter (\exists x) x\leq 0$}	
+\UnaryInfC{$ \fCenter x\leq 0$}
+\end{prooftree}
+следовательно $\fCenter x\leq 0$ выводима и является тождественно истинной. Но $\fCenter x\leq 0$ не является тождественно истинной секвенцией, так как существует состояние $\sigma: \sigma(x)=1$, на котором формула $x\leq 0$ ложна.
+\end{enumerate}
+
+
+\end{document}
