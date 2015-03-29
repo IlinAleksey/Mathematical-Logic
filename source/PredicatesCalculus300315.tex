@@ -10,6 +10,7 @@
 \usepackage{amsmath,amsthm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
 \usepackage{bussproofs}
 \pagenumbering{gobble}
 
@@ -19,7 +20,7 @@
 \def\fCenter{\ \vdash\ }
 \begin{document}
 \begin{enumerate}
-\item Вывести $\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta \fCenter (\exists y)\theta \to (\forall x)[(\exists z)\neg \psi \vee \varphi]$
+\item Вывести $\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta \fCenter (\exists y)\theta \to (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$
 \begin{prooftree}
 				
 				\AxiomC{}
@@ -30,6 +31,20 @@
 	\UnaryInfC{$\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta, (\exists y)\theta \fCenter (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$}
 \UnaryInfC{$\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta \fCenter (\exists y)\theta \to (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$}
 \end{prooftree}
+Бесперспективно.
+\begin{proposition}
+Секвенция $\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta \fCenter (\exists y)\theta \to (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$ не является выводимой.
+\begin{proof}
+Возьмём формулы $\varphi=x\approx x,\psi = z\approx z,\theta= y\approx y$ Тогда для любого состояния $\sigma$ верно $\sigma(\neg(\exists x)[\varphi \wedge (\exists z)\psi])=0$ и $\sigma((\forall y)\theta)=1$. Заметим, что 
+\begin{enumerate}
+\item $\neg(\exists x)[\varphi \wedge (\exists z)\psi]\equiv (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$, следовательно $\sigma((\forall x)[(\forall z)\neg \psi \vee \neg\varphi])=1$
+\item $\sigma((\forall y)\theta)=1 \Rightarrow \sigma((\exists y)\theta)=1$
+\end{enumerate}
+Левая часть секвенции тождественно истинна. Правая часть секвенции тождественно ложна, так как посылка тождественно истинна и следствие тождественно ложно. Следовательно вся секвенция тождественно ложна.
+
+Исчисление высказываний является непротиворечивым, следовательно секвенция $\neg(\exists x)[\varphi \wedge (\exists z)\psi]\vee (\forall y)\theta \fCenter (\exists y)\theta \to (\forall x)[(\forall z)\neg \psi \vee \neg\varphi]$ не является выводимой.
+\end{proof}
+\end{proposition}
 \item Доказать что введение $\exists$ слева обратимо.
 Сначала докажем, что $(\exists x)\varphi \fCenter \varphi$ выводимо:
 \begin{prooftree}
@@ -45,7 +60,7 @@
 \end{prooftree}
 \item Доказать что введение $\exists$ справа необратимо. Рассмотрим сигнатуру $\Sigma = (\leq^{(2)};+^{(2)},0^{(0)},1^{(0)})$ и алгебраическую систему в этой сигнатуре: $\mathcal{A}=(\omega, \leq; +, 0, 1)$.
 
-Пусть "введение $\exists$ справа" - обратимое правило, тогда верно
+Пусть "введение $\exists$ справа" обратимое правило, тогда верно
 
 \begin{prooftree}
 	\AxiomC{$ \fCenter (\exists x) x\leq 0$}	
