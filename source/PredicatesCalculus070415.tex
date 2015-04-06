@@ -1,0 +1,71 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot, landscape,paperheight=15in]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+\begin{enumerate}
+\item Вывести $(\forall x)P(g(x)),(\forall x)(\exists y)x \approx g(y)\fCenter (\forall x) P(x)$
+\begin{prooftree}
+							\AxiomC{$(P(x))^x_t,t \approx x\fCenter (P(x))^x_x$}
+							\RightLabel{\scriptsize(зам. экв.)}
+						\UnaryInfC{$P(t),x \approx t\fCenter P(x)$}
+						\RightLabel{\scriptsize(своб. конкр.)}
+					\UnaryInfC{$P(g(y)),x \approx g(y)\fCenter P(x)$}
+					
+				\UnaryInfC{$(P(g(x)))^x_y,x \approx g(y)\fCenter P(x)$}
+				\RightLabel{\scriptsize($\forall$ лев)}
+			\UnaryInfC{$(\forall x)P(g(x)),x \approx g(y)\fCenter P(x)$}
+			\RightLabel{\scriptsize($\exists$ лев)}
+		\UnaryInfC{$(\forall x)P(g(x)),(\exists y)x \approx g(y)\fCenter P(x)$}
+		\RightLabel{\scriptsize($\forall$ лев)}
+	\UnaryInfC{$(\forall x)P(g(x)),(\forall x)(\exists y)x \approx g(y)\fCenter P(x)$}
+	\RightLabel{\scriptsize($\forall$ прав)}	
+\UnaryInfC{$(\forall x)P(g(x)),(\forall x)(\exists y)x \approx g(y)\fCenter (\forall x) P(x)$}
+\end{prooftree}
+\item Вывести $(\forall x)(\forall y)(\forall z)(R(x,y)\wedge R(y,z)\to P(y)), (\forall x)(\exists y)R(x,y)\fCenter (\exists x)P(x)$
+
+\begin{prooftree}
+								\AxiomC{$(R(x,y))^y_x \fCenter  R(x,x)$}
+								\LeftLabel{\scriptsize(ут, пер)}
+							\UnaryInfC{$((R(x,y)\wedge R(y,z)\to P(y))^y_x)^z_x, (R(x,y))^y_x\fCenter  R(x,x)$}
+									\AxiomC{$(R(x,y)\to P(y))^y_x\fCenter R(x,x)\to P(x)$}
+									\RightLabel{\scriptsize(экв. зам.)}
+								\UnaryInfC{$((R(x,y)\wedge R(y,z)\to P(y))^y_x)^z_x\fCenter R(x,x)\to P(x)$}
+								\RightLabel{\scriptsize(ут)}
+							\UnaryInfC{$((R(x,y)\wedge R(y,z)\to P(y))^y_x)^z_x, (R(x,y))^y_x\fCenter R(x,x)\to P(x)$}
+							\RightLabel{\scriptsize(уд. $\to$)}
+						\BinaryInfC{$((R(x,y)\wedge R(y,z)\to P(y))^y_x)^z_x, (R(x,y))^y_x\fCenter P(x)$}
+						\RightLabel{\scriptsize($\forall$ лев)}
+					\UnaryInfC{$((\forall z)(R(x,y)\wedge R(y,z)\to P(y)))^y_x, (R(x,y))^y_x\fCenter P(x)$}
+					\RightLabel{\scriptsize($\forall$ лев)}
+					
+				\UnaryInfC{$(\forall y)(\forall z)(R(x,y)\wedge R(y,z)\to P(y)), (R(x,y))^y_x\fCenter P(x)$}
+				\RightLabel{\scriptsize($\forall$ лев)}
+			\UnaryInfC{$(\forall x)(\forall y)(\forall z)(R(x,y)\wedge R(y,z)\to P(y)), (R(x,y))^y_x\fCenter P(x)$}
+			\RightLabel{\scriptsize($\exists$ лев)}
+		\UnaryInfC{$(\forall x)(\forall y)(\forall z)(R(x,y)\wedge R(y,z)\to P(y)), (\exists y)R(x,y)\fCenter P(x)$}
+		\RightLabel{\scriptsize($\forall$ лев)}
+	\UnaryInfC{$(\forall x)(\forall y)(\forall z)(R(x,y)\wedge R(y,z)\to P(y)), (\forall x)(\exists y)R(x,y)\fCenter P(x)$}
+	\RightLabel{\scriptsize($\exists$ прав)}	
+\UnaryInfC{$(\forall x)(\forall y)(\forall z)(R(x,y)\wedge R(y,z)\to P(y)), (\forall x)(\exists y)R(x,y)\fCenter (\exists x)P(x)$}
+\end{prooftree}
+\end{enumerate}
+
+
+\end{document}
