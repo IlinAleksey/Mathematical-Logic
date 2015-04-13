@@ -1,0 +1,80 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot, landscape,paperheight=15in]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\begin{document}
+\begin{enumerate}
+\item Вывести $(\forall x)(\forall y)(R(x,y)\to R(y,x)),(\exists y)(\forall x)R(x,y)\fCenter (\forall x)R(x,x)$
+
+\begin{proposition}
+Секвенция $(\forall x)(\forall y)(R(x,y)\to R(y,x)),(\exists y)(\forall x)R(x,y)\fCenter (\forall x)R(x,x)$ не выводима.
+\begin{proof}
+Рассмотрим алгебраическую систему $\mathcal{A}=(A,I)$, где $I(R)$ - отношение, заданное графом:
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,draw}]
+
+  \node[main node] (1) {a};
+  \node[main node] (2) [right of = 1] {b};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [bend right] node[right] {}(2)
+		edge [loop left] node {} (1)
+
+    (2) 
+        edge [bend right] node[right] {} (1);
+\end{tikzpicture}
+
+$(\forall x)(\forall y)(R(x,y)\to R(y,x))$ является тождественно истинной формулой, для любого ребра есть ему обратное. $(\exists y)(\forall x)R(x,y)$ является тождественно истинной формулой, существует вершина, с которой все остальные соединены рёбрами (включая её саму). $(\forall x)R(x,x)$ является тождественно ложной формулой, петель нет.
+
+Секвенция $(\forall x)(\forall y)(R(x,y)\to R(y,x)),(\exists y)(\forall x)R(x,y)\fCenter (\forall x)R(x,x)$ ложна на алгебраической системе $\mathcal{A}$, следовательно
+\end{proof}
+
+\end{proposition}
+\item Вывести $(\forall x)(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter (\forall x)(\exists y)(\exists z)R(z,y)\wedge R(y,x)$
+\begin{prooftree}
+											\AxiomC{$R(y,x)^x_t, t \approx y\fCenter R(y,x)^x_y$}
+										\UnaryInfC{$R(y,t), t \approx y\fCenter R(y,y)$}
+									\UnaryInfC{$t \approx y,R(y,t)\fCenter R(y,y)$}
+								\UnaryInfC{$y \approx t,R(y,t)\fCenter R(y,y)$}
+							\UnaryInfC{$y \approx g(y),R(y,g(y))\fCenter R(y,y)$}
+						\UnaryInfC{$y \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,y)$}
+					\UnaryInfC{$(\exists y)y \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,y)$}
+				\UnaryInfC{$(\forall x)(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,y)$}
+												\AxiomC{$R(y,x)^x_t, t \approx x\fCenter R(y,x)^x_x$}
+											\UnaryInfC{$R(y,t), t \approx x\fCenter R(y,x)$}
+										\UnaryInfC{$R(y,g(y)), g(y) \approx x\fCenter R(y,x)$}
+									\UnaryInfC{$R(y,g(y)), x \approx g(y)\fCenter R(y,x)$}
+								\UnaryInfC{$x \approx g(y),R(y,g(y))\fCenter R(y,x)$}
+							\UnaryInfC{$x \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,x)$}
+						\UnaryInfC{$(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,x)$}
+					\UnaryInfC{$(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,x)$}
+				\UnaryInfC{$(\forall x)(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,x)$}
+			\BinaryInfC{$(\forall x)(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter R(y,y)\wedge R(y,x)$}
+		\UnaryInfC{$(\forall x)(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter (\exists z)R(z,y)\wedge R(y,x)$}
+	\UnaryInfC{$(\forall x)(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter (\exists y)(\exists z)R(z,y)\wedge R(y,x)$}
+\UnaryInfC{$(\forall x)(\exists y)x \approx g(y),(\forall x)R(x,g(x))\fCenter (\forall x)(\exists y)(\exists z)R(z,y)\wedge R(y,x)$}
+\end{prooftree}
+\end{enumerate}
+
+
+\end{document}
