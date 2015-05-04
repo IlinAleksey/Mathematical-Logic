@@ -1,0 +1,84 @@
+
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot, landscape,paperheight=50in]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\begin{document}
+
+\begin{prooftree}
+						\AxiomC{$\fCenter 0 + 0 \approx 0$}
+									\AxiomC{$(0 + x) \approx x \fCenter (0 + x) \approx x$}
+										\AxiomC{$\fCenter   0 + s(x) \approx s(0+x)$}
+									\UnaryInfC{$(0 + x) \approx x \fCenter   0 + s(x) \approx s(0+x)$}
+								\BinaryInfC{$ (0 + x) \approx x \fCenter 0 + s(x) \approx s(x)$}
+							\UnaryInfC{$\fCenter (0 + x) \approx x \to 0 + s(x) \approx s(x)$}
+						\UnaryInfC{$\fCenter (\forall x)[(0 + x) \approx x \to 0 + s(x) \approx s(x)]$}
+					\BinaryInfC{$\fCenter 0 + 0 \approx 0 \wedge (\forall x)[(0 + x) \approx x \to 0 + s(x) \approx s(x)]$}
+						\AxiomC{$ 0 + 0 \approx 0 \wedge (\forall x)[(0 + x) \approx x \to 0 + s(x) \approx s(x)] \fCenter  (\forall x)0 + x \approx x$}
+					\UnaryInfC{$ \fCenter 0 + 0 \approx 0 \wedge (\forall x)[(0 + x) \approx x \to 0 + s(x) \approx s(x)]\to   (\forall x)0 + x \approx x$}
+				\BinaryInfC{$\fCenter(\forall x)0 + x \approx x$}
+			\UnaryInfC{$\fCenter0 + x \approx x$}
+		\UnaryInfC{$\fCenter  x \approx 0 + x $}
+		\AxiomC{$\fCenter x+0 \approx x$}
+	\BinaryInfC{$\fCenter x+0 \approx 0 + x$}
+					\AxiomC{$\fCenter x + s(y) \approx s(x+y)$}
+											\AxiomC{$\fCenter s(y)+0 \approx s(y)$}
+										\UnaryInfC{$\fCenter s(y) \approx s(y)+0$}
+											\AxiomC{$\fCenter y+0 \approx y$}
+											\AxiomC{$\fCenter s(y) \approx s(y)$}
+										\BinaryInfC{$\fCenter s(y) \approx s(y+0)$}
+									\BinaryInfC{$\fCenter s(y)+0 \approx s(y+0)$}
+														\AxiomC{$\fCenter s(y)+s(x) \approx s(s(y)+x)$}
+													\UnaryInfC{$\fCenter  s(s(y)+x) \approx s(y)+s(x)$}
+												\UnaryInfC{$ s(y)+x \approx s(y+x) \fCenter s(s(y)+x) \approx s(y)+s(x)$}
+													\AxiomC{$ s(y)+x \approx s(y+x) \fCenter s(y)+x \approx s(y+x)$}
+																\AxiomC{$ \fCenter  y+s(x) \approx s(y+x)$}
+															\UnaryInfC{$ \fCenter s(y+x) \approx y+s(x)$}
+														\UnaryInfC{$ s(y)+x \approx s(y+x) \fCenter s(y+x) \approx y+s(x)$}
+															\AxiomC{$ \fCenter s(s(y+x)) \approx s(s(y+x))$}
+														\UnaryInfC{$ s(y)+x \approx s(y+x) \fCenter s(s(y+x)) \approx s(s(y+x))$}
+													\BinaryInfC{$ s(y)+x \approx s(y+x) \fCenter s(s(y+x)) \approx s(y+s(x))$}
+												\BinaryInfC{$ s(y)+x \approx s(y+x) \fCenter s(s(y)+x) \approx s(y+s(x))$}
+											\BinaryInfC{$ s(y)+x \approx s(y+x) \fCenter s(y)+s(x) \approx s(y+s(x))$}
+										\UnaryInfC{$\fCenter s(y)+x \approx s(y+x) \to s(y)+s(x) \approx s(y+s(x))$}
+									\UnaryInfC{$\fCenter (\forall x)[s(y)+x \approx s(y+x) \to s(y)+s(x) \approx s(y+s(x))]$}
+								\BinaryInfC{$\fCenter s(y)+0 \approx s(y+0) \wedge (\forall x)[s(y)+x \approx s(y+x) \to s(y)+s(x) \approx s(y+s(x))]$}
+									\AxiomC{$s(y)+0 \approx s(y+0) \wedge (\forall x)[s(y)+x \approx s(y+x) \to s(y)+s(x) \approx s(y+s(x))] \fCenter (\forall x) s(y)+x \approx s(y+x)$}
+								\UnaryInfC{$\fCenter s(y)+0 \approx s(y+0) \wedge (\forall x)[s(y)+x \approx s(y+x) \to s(y)+s(x) \approx s(y+s(x))] \to (\forall x) s(y)+x \approx s(y+x)$}
+							\BinaryInfC{$\fCenter s(y) + x \approx s(x+y)$}
+							\AxiomC{$\fCenter s(x+y) \approx s(x+y)$}
+						\BinaryInfC{$\fCenter s(x+y) \approx s(y) + x$}
+					\UnaryInfC{$\fCenter s(x+y) \approx s(y) + x$}
+				\BinaryInfC{$\fCenter (x + s(y)) \approx (s(y) + x)$}
+			\UnaryInfC{$ (x + y) \approx (y + x) \fCenter (x + s(y)) \approx (s(y) + x)$}
+		\UnaryInfC{$\fCenter (x + y) \approx (y + x) \to (x + s(y)) \approx (s(y) + x)$}
+	\UnaryInfC{$\fCenter (\forall y)((x + y) \approx (y + x) \to (x + s(y)) \approx (s(y) + x))$}
+\BinaryInfC{$\fCenter (x + 0) \approx (0 + x) \wedge (\forall y)(x + y) \approx (y + x)$}
+	\AxiomC{$(x + 0) \approx (0 + x) \wedge (\forall y)((x + y) \approx (y + x) \to (x + s(y)) \approx (s(y) + x)) \fCenter 
+		(\forall y)(x + y) \approx (y + x)$}
+\UnaryInfC{$\fCenter (x + 0) \approx (0 + x) \wedge (\forall y)((x + y) \approx (y + x) \to (x + s(y)) \approx (s(y) + x))
+	\to (\forall y)(x + y) \approx (y + x)$}
+\BinaryInfC{$\fCenter x+y \approx y+x$}
+	
+\end{prooftree}
+
+
+
+\end{document}
