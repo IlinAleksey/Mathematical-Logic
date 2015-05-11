@@ -1,0 +1,91 @@
+
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot, landscape,paperheight=30in]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+\begin{proposition}
+	Секвенция $\fCenter (x+y)+z \approx x+(y+z)$ выводима в ариметике Пеано
+	\begin{proof}
+		Секвенция $\fCenter (x+y)+0 \approx x+(y+0)$ выводима в ариметике Пеано:
+		\begin{prooftree}
+							\AxiomC{$\fCenter t+0 \approx t$}
+						\LeftLabel{\scriptsize(Свободная конкретизация)}
+						\UnaryInfC{$\fCenter (x+y)+0 \approx x+y$}
+					\LeftLabel{\scriptsize(Симметричность равенства)}
+					\UnaryInfC{$\fCenter x+y \approx (x+y)+0$}
+							\AxiomC{$\fCenter y+0 \approx y$}
+						\LeftLabel{\scriptsize(Симметричность равенства)}
+						\UnaryInfC{$\fCenter y \approx y+0$}
+						\AxiomC{$\fCenter x+y \approx x+y$}
+					\RightLabel{\scriptsize(Замена равных)}
+					\BinaryInfC{$\fCenter x+y \approx x+(y+0)$}
+				\RightLabel{\scriptsize(Замена равных)}
+				\BinaryInfC{$\fCenter (x+y)+0 \approx x+(y+0)$}
+		\end{prooftree}
+		Секвенция $\fCenter (\forall z)((x+y)+z \approx x+(y+z) \to (x+y)+s(z) \approx x+(y+s(z)) )$ выводима в ариметике Пеано:
+		\begin{prooftree}
+								\AxiomC{$\fCenter  (x+y)+s(z) \approx s((x+y)+z) $}
+							\LeftLabel{\scriptsize(Симметричность равенства)}
+							\UnaryInfC{$\fCenter  s((x+y)+z) \approx (x+y)+s(z) $}
+						\LeftLabel{\scriptsize(Утончение)}
+						\UnaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  s((x+y)+z) \approx (x+y)+s(z) $}
+									\AxiomC{$\fCenter  y+s(z)  \approx s(y+z) $}
+								\LeftLabel{\scriptsize(Симметричность равенства)}
+								\UnaryInfC{$\fCenter  s(y+z)  \approx y+s(z) $}
+							\LeftLabel{\scriptsize(Утончение)}
+							\UnaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  s(y+z)  \approx y+s(z) $}
+										\AxiomC{$ \fCenter  x+s(y+z) \approx s(x+(y+z)) $}
+									\LeftLabel{\scriptsize(Симметричность равенства)}
+									\UnaryInfC{$ \fCenter  s(x+(y+z)) \approx x+s(y+z) $}
+								\LeftLabel{\scriptsize(Утончение)}
+								\UnaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  s(x+(y+z)) \approx x+s(y+z) $}
+									\AxiomC{$(x+y)+z \approx x+(y+z) \fCenter  (x+y)+z \approx x+(y+z) $}
+										\AxiomC{$\fCenter  s((x+y)+z) \approx s((x+y)+z) $}
+									\RightLabel{\scriptsize(Утончение)}
+									\UnaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  s((x+y)+z) \approx s((x+y)+z) $}
+								\RightLabel{\scriptsize(Замена равных)}
+								\BinaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  s((x+y)+z) \approx s(x+(y+z)) $}
+							\RightLabel{\scriptsize(Замена равных)}
+							\BinaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  s((x+y)+z) \approx x+s(y+z) $}
+						\RightLabel{\scriptsize(Замена равных)}
+						\BinaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  s((x+y)+z) \approx x+(y+s(z)) $}
+					\RightLabel{\scriptsize(Замена равных)}
+					\BinaryInfC{$(x+y)+z \approx x+(y+z) \fCenter  (x+y)+s(z) \approx x+(y+s(z)) $}
+				\RightLabel{\scriptsize(Введ. $\to$)}
+				\UnaryInfC{$\fCenter (x+y)+z \approx x+(y+z) \to (x+y)+s(z) \approx x+(y+s(z)) $}
+			\RightLabel{\scriptsize(Введ. $\forall$ справа)}
+			\UnaryInfC{$\fCenter (\forall z)((x+y)+z \approx x+(y+z) \to (x+y)+s(z) \approx x+(y+s(z)) )$}
+		\end{prooftree}
+		Секвенция $\fCenter (x+y)+z \approx x+(y+z)$ выводима в ариметике Пеано:
+		\begin{prooftree}
+					\AxiomC{$\fCenter (x+y)+0 \approx x+(y+0)$ (базис)}
+					\AxiomC{$\fCenter (\forall z)((x+y)+z \approx x+(y+z) \to (x+y)+s(z) \approx x+(y+s(z)) )$ (индукционный шаг)}
+				\LeftLabel{\scriptsize(Введ. $\wedge$)}
+				\BinaryInfC{$\fCenter (x+y)+0 \approx x+(y+0) \wedge (\forall z)((x+y)+z \approx x+(y+z) \to (x+y)+s(z) \approx x+(y+s(z)) )$}
+					\AxiomC{$ (x+y)+0 \approx x+(y+0) \wedge (\forall z)((x+y)+z \approx x+(y+z) \to (x+y)+s(z) \approx x+(y+s(z)) ) \fCenter (x+y)+z \approx x+(y+z)$}
+				\RightLabel{\scriptsize(Введ. $\to$)}
+				\UnaryInfC{$\fCenter (x+y)+0 \approx x+(y+0) \wedge (\forall z)((x+y)+z \approx x+(y+z) \to (x+y)+s(z) \approx x+(y+s(z)) ) \to (x+y)+z \approx x+(y+z)$}
+			\RightLabel{\scriptsize(Удаление $\to$)}
+			\BinaryInfC{$\fCenter (x+y)+z \approx x+(y+z)$}
+		\end{prooftree}
+	\end{proof}
+\end{proposition}
+
+
+
+\end{document}
