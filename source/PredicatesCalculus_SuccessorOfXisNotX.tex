@@ -1,0 +1,138 @@
+
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot, landscape,paperheight=35in]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+\begin{lemma}
+	Обратное введение импликации - допустимое правило исчисления высказываний
+	\begin{prooftree}
+		\AxiomC{$\Gamma \fCenter \varphi \to \psi$}
+		\UnaryInfC{$\Gamma, \varphi \fCenter \psi$}
+	\end{prooftree}	
+	\begin{proof}
+		Пусть $\varphi, \psi$ - формулы, $\Gamma$ - последовательность формул
+		\begin{prooftree}
+						\AxiomC{$ \varphi \fCenter \varphi$}
+					\UnaryInfC{$...$}
+				\UnaryInfC{$\Gamma, \varphi \fCenter \varphi$}
+					\AxiomC{$\Gamma\fCenter \varphi \to \psi$}
+				\UnaryInfC{$\Gamma, \varphi\fCenter \varphi \to \psi$}
+			\BinaryInfC{$\Gamma, \varphi \fCenter \psi$}
+		\end{prooftree}	
+	\end{proof}
+\end{lemma}
+\begin{lemma}
+	Секвенция $x + a \approx x \fCenter   a \approx 0 $ выводима в арифметике Пеано
+	\begin{proof}
+		 Построим дерево вывода
+		\begin{prooftree}
+									\AxiomC{$\fCenter  a+0 \approx 0+a  $}
+								\LeftLabel{\scriptsize(Утончение)}
+								\UnaryInfC{$0 + a \approx 0   \fCenter  a+0 \approx 0+a  $}
+										\AxiomC{$ \fCenter  a + 0 \approx a  $}
+									\LeftLabel{\scriptsize(Утончение)}
+									\UnaryInfC{$a + 0 \approx 0   \fCenter  a + 0 \approx a  $}
+									\AxiomC{$a + 0 \approx 0   \fCenter  a + 0 \approx 0  $}
+								\RightLabel{\scriptsize(Замена равных)}
+								\BinaryInfC{$a + 0 \approx 0   \fCenter  a \approx 0  $}
+							\LeftLabel{\scriptsize(Замена равных)}
+							\BinaryInfC{$0 + a \approx 0   \fCenter  a \approx 0  $}
+						\LeftLabel{\scriptsize(Введение $\to$)}
+						\UnaryInfC{$ \fCenter   0 + a \approx 0  \to   a \approx 0  $}
+													\AxiomC{$ \fCenter a + s(x)  \approx s(x) + a $}
+															\AxiomC{$ \fCenter a + s(x)   \approx s(a+x)  $}
+														\LeftLabel{\scriptsize(Симметрия равенства)}
+														\UnaryInfC{$ \fCenter s(a+x)  \approx a + s(x)  $}
+															\AxiomC{$ \fCenter x+a \approx a+x$}
+																	\AxiomC{$ s(t) \approx s(x) \fCenter t \approx x $}
+																\RightLabel{\scriptsize(Свободная конкретизация)}
+																\UnaryInfC{$ s(x+a) \approx s(x) \fCenter  x + a \approx x $}
+															\RightLabel{\scriptsize(Введение $\to$)}
+															\UnaryInfC{$ \fCenter s(x+a) \approx s(x) \to   x + a \approx x $}
+														\RightLabel{\scriptsize(Замена равных)}
+														\BinaryInfC{$ \fCenter s(a+x) \approx s(x) \to   x + a \approx x $}
+													\RightLabel{\scriptsize(Замена равных)}
+													\BinaryInfC{$ \fCenter a + s(x) \approx s(x) \to   x + a \approx x $}
+												\RightLabel{\scriptsize(Замена равных)}
+												\BinaryInfC{$ \fCenter s(x) + a \approx s(x) \to   x + a \approx x $}
+											\RightLabel{\scriptsize(Обратное введение $\to$)}
+											\UnaryInfC{$s(x) + a \approx s(x) \fCenter x + a \approx x $}
+										\RightLabel{\scriptsize(Утончение)}
+										\UnaryInfC{$x + a \approx x  \to   a \approx 0, s(x) + a \approx s(x) \fCenter x + a \approx x $}
+											\AxiomC{$x + a \approx x  \to   a \approx 0 \fCenter  x + a \approx x  \to   a \approx 0 $}
+										\RightLabel{\scriptsize(Утончение)}
+										\UnaryInfC{$x + a \approx x  \to   a \approx 0, s(x) + a \approx s(x) \fCenter  x + a \approx x  \to   a \approx 0 $}
+									\RightLabel{\scriptsize(Modus Ponens)}
+									\BinaryInfC{$x + a \approx x  \to   a \approx 0, s(x) + a \approx s(x) \fCenter     a \approx 0 $}
+								\RightLabel{\scriptsize(Введение $\to$)}
+								\UnaryInfC{$x + a \approx x  \to   a \approx 0 \fCenter  s(x) + a \approx s(x)  \to   a \approx 0 $}
+							\RightLabel{\scriptsize(Введение $\to$)}
+							\UnaryInfC{$ \fCenter   (x + a \approx x  \to   a \approx 0) \to (s(x) + a \approx s(x)  \to   a \approx 0) $}
+						\RightLabel{\scriptsize(Введение $\forall$ справа)}
+						\UnaryInfC{$ \fCenter   (\forall x)((x + a \approx x  \to   a \approx 0) \to (s(x) + a \approx s(x)  \to   a \approx 0)) $}
+					\RightLabel{\scriptsize(Введение $\wedge$)}
+					\BinaryInfC{$ \fCenter   0 + a \approx 0  \to   a \approx 0 \wedge (\forall x)(x + a \approx x  \to   a \approx 0 \to s(x) + a \approx s(x)  \to   a \approx 0) $}
+							\AxiomC{$0 + a \approx 0  \to   a \approx 0 \wedge (\forall x)(x + a \approx x  \to   a \approx 0 \to s(x) + a \approx s(x)  \to   a \approx 0) \fCenter (\forall x)( x + a \approx x  \to   a \approx 0) $}
+						\RightLabel{\scriptsize(Обратное введение $\forall$ справа)}
+						\UnaryInfC{$0 + a \approx 0  \to   a \approx 0 \wedge (\forall x)(x + a \approx x  \to   a \approx 0 \to s(x) + a \approx s(x)  \to   a \approx 0) \fCenter x + a \approx x  \to   a \approx 0 $}
+					\RightLabel{\scriptsize(Введение $\to$)}	
+					\UnaryInfC{$\fCenter   [0 + a \approx 0  \to   a \approx 0 \wedge (\forall x)(x + a \approx x  \to   a \approx 0 \to s(x) + a \approx s(x)  \to   a \approx 0)] \to x + a \approx x  \to   a \approx 0 $}
+				\RightLabel{\scriptsize(Modus Ponens)}
+				\BinaryInfC{$\fCenter x + a \approx x  \to   a \approx 0 $}
+			\RightLabel{\scriptsize(Удаление $\to$)}
+			\UnaryInfC{$x + a \approx x \fCenter   a \approx 0 $}
+		\end{prooftree}
+		
+		
+		
+	\end{proof}
+\end{lemma}
+\begin{proposition}
+	Секвенция $\fCenter \neg s(x+v) \approx x$ выводима в арифметике Пеано
+	\begin{proof}
+		От противного
+		\begin{prooftree}
+								\AxiomC{$x + a \approx x \fCenter   a \approx 0 $}
+							\LeftLabel{\scriptsize(Свободная конкретизация)}
+							\UnaryInfC{$x + s(v) \approx x \fCenter   s(v) \approx 0 $}
+						\LeftLabel{\scriptsize(Введение $\to$)}
+						\UnaryInfC{$\fCenter  x + s(v) \approx x \to  s(v) \approx 0 $}
+					\LeftLabel{\scriptsize(Утончение)}
+					\UnaryInfC{$ s(x+v) \approx x \fCenter  x + s(v) \approx x \to  s(v) \approx 0 $}
+								\AxiomC{$ \fCenter  x + s(v) \approx s(x+v)  $}
+							\LeftLabel{\scriptsize(Симметрия равенства)}
+							\UnaryInfC{$ \fCenter  s(x+v) \approx x + s(v)  $}
+						\LeftLabel{\scriptsize(Утончение)}
+						\UnaryInfC{$ s(x+v) \approx x \fCenter  s(x+v) \approx x + s(v)  $}
+						\AxiomC{$ s(x+v) \approx x \fCenter  s(x+v) \approx x  $}
+					\RightLabel{\scriptsize(Замена равных)}
+					\BinaryInfC{$ s(x+v) \approx x \fCenter  x + s(v) \approx x  $}
+				\LeftLabel{\scriptsize(Modus Ponens)}
+				\BinaryInfC{$ s(x+v) \approx x \fCenter  s(v) \approx 0 $}
+					\AxiomC{$ \fCenter \neg s(v) \approx 0 $}
+				\RightLabel{\scriptsize(Утончение)}
+				\UnaryInfC{$ s(x+v) \approx x \fCenter \neg s(v) \approx 0 $}
+			\RightLabel{\scriptsize(Не правило)}
+			\BinaryInfC{$\fCenter \neg s(x+v) \approx x$}
+		\end{prooftree}
+	\end{proof}
+\end{proposition}
+
+
+
+\end{document}
