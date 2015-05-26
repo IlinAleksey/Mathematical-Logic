@@ -1,0 +1,296 @@
+
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+
+\newcommand{\tmsymbthree}[3]{\begin{tabular}{ | c | }
+		\hline
+		#1 \\ \hline
+		#2 \\ \hline
+		#3 \\ 
+		\hline
+	\end{tabular}}
+
+\newcommand{\tmsymbtwo}[2]{\begin{tabular}{ | c | }
+		\hline
+		#1 \\ \hline
+		#2 \\ 
+		\hline
+	\end{tabular}}
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+	\begin{enumerate}
+		\item сложение с записью младших разрядов справа
+		
+		$q_0$ - начать работу
+		
+		$q_0$\tmsymbthree{$\#$}{$\#$}{$\#$}$\to q_1$\tmsymbthree{$\#$}{$\#$}{$\#$},\tmsymbthree{$+1$}{$+1$}{$+1$}
+		
+		$q_1$ - идти до конца обоих чисел
+		
+		$q_1$\tmsymbthree{$*$}{$*$}{$\wedge$}$\to q_1$\tmsymbthree{$*$}{$*$}{$\wedge$},\tmsymbthree{$+1$}{$+1$}{$+1$}
+		
+		$q_1$\tmsymbthree{$\wedge$}{$*$}{$\wedge$}$\to q_2$\tmsymbthree{$\wedge$}{$*$}{$\wedge$},\tmsymbthree{$-1$}{$+1$}{$+1$}
+		,$*\in \{0,1\}$
+		
+		$q_1$\tmsymbthree{$*$}{$\wedge$}{$\wedge$}$\to q_3$\tmsymbthree{$*$}{$\wedge$}{$\wedge$},\tmsymbthree{$+1$}{$-1$}{$+1$}
+		,$*\in \{0,1\}$
+		
+		$q_1$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$}$\to q_4$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_2$ - дошли до конца числа на нижней ленте, продвигаться по верхней ленте
+		
+		$q_2$\tmsymbthree{$\wedge$}{$*$}{$\wedge$}$\to q_2$\tmsymbthree{$\wedge$}{$*$}{$\wedge$},\tmsymbthree{$0$}{$+1$}{$+1$}
+		,$*\in \{0,1\}$
+		
+		$q_2$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$}$\to q_4$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		
+		$q_3$ - дошли до конца числа на верхней ленте, продвигаться по нижней ленте
+		
+		$q_3$\tmsymbthree{$*$}{$\wedge$}{$\wedge$}$\to q_3$\tmsymbthree{$*$}{$\wedge$}{$\wedge$},\tmsymbthree{$+1$}{$0$}{$+1$}
+		,$*\in \{0,1\}$
+		
+		$q_3$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$}$\to q_4$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$},\tmsymbthree{$-1$}{$0$}{$-1$}
+		
+		$q_4$ - дошли до конца обоих чисел, складывать пока можно, если дошли до начала лент с этим состоянием, то завершить
+		
+		$q_4$\tmsymbthree{$1$}{$1$}{$\wedge$}$\to q_4^1$\tmsymbthree{$1$}{$1$}{$0$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_4$\tmsymbthree{$1$}{$0$}{$\wedge$}$\to q_4$\tmsymbthree{$1$}{$0$}{$1$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_4$\tmsymbthree{$0$}{$1$}{$\wedge$}$\to q_4$\tmsymbthree{$0$}{$1$}{$1$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_4$\tmsymbthree{$0$}{$0$}{$\wedge$}$\to q_4$\tmsymbthree{$0$}{$0$}{$0$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		%one of them is empty
+		$q_4$\tmsymbthree{$\#$}{$1$}{$\wedge$}$\to q_4$\tmsymbthree{$\wedge$}{$1$}{$1$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		
+		$q_4$\tmsymbthree{$\#$}{$0$}{$\wedge$}$\to q_4$\tmsymbthree{$\#$}{$0$}{$0$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		
+		$q_4$\tmsymbthree{$0$}{$\#$}{$\wedge$}$\to q_4$\tmsymbthree{$0$}{$\#$}{$0$},\tmsymbthree{$-1$}{$0$}{$-1$}
+		
+		$q_4$\tmsymbthree{$1$}{$\#$}{$\wedge$}$\to q_4$\tmsymbthree{$1$}{$\#$}{$1$},\tmsymbthree{$-1$}{$0$}{$-1$}
+		
+		
+		%ok exit
+		$q_4$\tmsymbthree{$\#$}{$\#$}{$\#$}$\to f$\tmsymbthree{$\#$}{$\#$}{$\#$},\tmsymbthree{$0$}{$0$}{$0$}
+		
+		$q_4^1$ - складывать с переносом, если дошли до начала лент с этим состоянием, то начать сдвигать число направо
+		
+		%with shift
+		$q_4^1$\tmsymbthree{$1$}{$1$}{$\wedge$}$\to q_4$\tmsymbthree{$1$}{$1$}{$1$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_4^1$\tmsymbthree{$1$}{$0$}{$\wedge$}$\to q_4^1$\tmsymbthree{$1$}{$0$}{$0$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_4^1$\tmsymbthree{$0$}{$1$}{$\wedge$}$\to q_4^1$\tmsymbthree{$0$}{$1$}{$0$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_4^1$\tmsymbthree{$0$}{$0$}{$\wedge$}$\to q_4$\tmsymbthree{$0$}{$0$}{$1$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		%one of them is empty
+		$q_4^1$\tmsymbthree{$\#$}{$1$}{$\wedge$}$\to q_4^1$\tmsymbthree{$\wedge$}{$1$}{$0$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		
+		$q_4^1$\tmsymbthree{$\#$}{$0$}{$\wedge$}$\to q_4$\tmsymbthree{$\#$}{$0$}{$1$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		
+		$q_4^1$\tmsymbthree{$0$}{$\#$}{$\wedge$}$\to q_4$\tmsymbthree{$0$}{$\#$}{$1$},\tmsymbthree{$-1$}{$0$}{$-1$}
+		
+		$q_4^1$\tmsymbthree{$1$}{$\#$}{$\wedge$}$\to q_4^1$\tmsymbthree{$1$}{$\#$}{$0$},\tmsymbthree{$-1$}{$0$}{$-1$}
+		
+		%not enough tape
+		$q_4$\tmsymbthree{$\#$}{$\#$}{$\#$}$\to q_5^1$\tmsymbthree{$\#$}{$\#$}{$\#$},\tmsymbthree{$+1$}{$+1$}{$+1$}
+		
+		$q_5^1$ - записать на ленту $1$ и запомнить текущий символ
+		
+		%shift tape
+		$q_5^1$\tmsymbthree{$*$}{$*$}{$1$}$\to q_5^1$\tmsymbthree{$*$}{$*$}{$1$},\tmsymbthree{$+1$}{$+1$}{$+1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_5^1$\tmsymbthree{$*$}{$*$}{$0$}$\to q_5^0$\tmsymbthree{$*$}{$*$}{$1$},\tmsymbthree{$+1$}{$+1$}{$+1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_5^1$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$}$\to q_6$\tmsymbthree{$\wedge$}{$\wedge$}{$1$},\tmsymbthree{$+1$}{$+1$}{$+1$}
+		
+		$q_5^0$ - записать на ленту $0$ и запомнить текущий символ
+		
+		$q_5^0$\tmsymbthree{$*$}{$*$}{$0$}$\to q_5^0$\tmsymbthree{$*$}{$*$}{$0$},\tmsymbthree{$+1$}{$+1$}{$+1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_5^0$\tmsymbthree{$*$}{$*$}{$1$}$\to q_5^1$\tmsymbthree{$*$}{$*$}{$0$},\tmsymbthree{$0$}{$0$}{$0$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_5^0$\tmsymbthree{$\wedge$}{$\wedge$}{$\wedge$}$\to q_6$\tmsymbthree{$\wedge$}{$\wedge$}{$0$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		
+		$q_6$ - идти в начало
+		
+		%go back
+		$q_6$\tmsymbthree{$*$}{$*$}{$*$}$\to q_6$\tmsymbthree{$*$}{$*$}{$*$},\tmsymbthree{$-1$}{$-1$}{$-1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_6$\tmsymbthree{$\#$}{$*$}{$*$}$\to q_7$\tmsymbthree{$\#$}{$*$}{$*$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_6$\tmsymbthree{$*$}{$\#$}{$*$}$\to q_8$\tmsymbthree{$*$}{$\#$}{$*$},\tmsymbthree{$-1$}{$0$}{$-1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_6$\tmsymbthree{$\#$}{$\#$}{$\#$}$\to f$\tmsymbthree{$\#$}{$\#$}{$\#$},\tmsymbthree{$0$}{$0$}{$0$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_7$ - дошли до начала числа на верхней ленте
+		
+		$q_7$\tmsymbthree{$\#$}{$*$}{$*$}$\to q_7$\tmsymbthree{$\#$}{$*$}{$*$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_7$\tmsymbthree{$\#$}{$\#$}{$\#$}$\to f$\tmsymbthree{$\#$}{$\#$}{$\#$},\tmsymbthree{$0$}{$0$}{$0$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_8$ - дошли до начала числа на нижней ленте
+		
+		$q_8$\tmsymbthree{$*$}{$\#$}{$*$}$\to q_8$\tmsymbthree{$*$}{$\#$}{$*$},\tmsymbthree{$0$}{$-1$}{$-1$}
+		,$*\in \{0,1,\wedge\}$
+		
+		$q_8$\tmsymbthree{$\#$}{$\#$}{$\#$}$\to f$\tmsymbthree{$\#$}{$\#$}{$\#$},\tmsymbthree{$0$}{$0$}{$0$}
+		,$*\in \{0,1,\wedge\}$
+		
+		\item  распознавание палиндромов
+		
+		$q_0$ - начать работу
+		
+		$q_0$\tmsymbtwo{$\#$}{$\#$}$\to q_1$\tmsymbtwo{$\#$}{$\#$},\tmsymbtwo{$+1$}{$+1$}
+		
+		$q_1$ - копировать текущее число нижней ленты на верхнюю
+		
+		$q_1$\tmsymbtwo{$\wedge$}{$a$}$\to q_1$\tmsymbtwo{$a$}{$a$},\tmsymbtwo{$+1$}{$+1$}
+		,$a\in\{0,1\}$
+		
+		$q_1$\tmsymbtwo{$\wedge$}{$\wedge$}$\to q_2$\tmsymbtwo{$\wedge$}{$\wedge$},\tmsymbtwo{$-1$}{$-1$}
+		
+		$q_2$ - вернуть головку нижней ленты в начало
+		
+		$q_2$\tmsymbtwo{$a$}{$b$}$\to q_2$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$0$}{$-1$}
+		,$a,b\in\{0,1\}$
+		
+		$q_2$\tmsymbtwo{$a$}{$\#$}$\to q_3$\tmsymbtwo{$a$}{$\#$},\tmsymbtwo{$0$}{$+1$}
+		,$a,b\in\{0,1\}$
+		
+		$q_3$ - сравнивать символы
+		
+		$q_3$\tmsymbtwo{$a$}{$b$}$\to q_3$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$-1$}{$+1$}
+		,$a=b,a,b\in\{0,1\}$
+		
+		$q_3$\tmsymbtwo{$a$}{$b$}$\to 0'$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$0$}{$0$}
+		,$a\neq b,a,b\in\{0,1\}$
+		
+		$q_3$\tmsymbtwo{$\#$}{$\wedge$}$\to 1'$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$0$}{$-1$}
+		
+		$0'$ - идти назад
+		
+		$0'$\tmsymbtwo{$a$}{$b$}$\to 0'$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$-1$}{$-1$}
+		,$a,b\in\{0,1\}$
+		
+		$0'$\tmsymbtwo{$a$}{$\#$}$\to 0'$\tmsymbtwo{$a$}{$\#$},\tmsymbtwo{$-1$}{$0$}
+		,$a,b\in\{0,1\}$
+		
+		$0'$\tmsymbtwo{$\#$}{$\#$}$\to 0!$\tmsymbtwo{$\#$}{$\#$},\tmsymbtwo{$0$}{$0$}
+		
+		$1'$ - идти назад
+		
+		$1'$\tmsymbtwo{$\#$}{$a$}$\to 1'$\tmsymbtwo{$\#$}{$a$},\tmsymbtwo{$0$}{$-1$}
+		,$a\in\{0,1\}$
+		
+		$1'$\tmsymbtwo{$\#$}{$\#$}$\to 1!$\tmsymbtwo{$\#$}{$\#$},\tmsymbtwo{$0$}{$0$}
+		
+		\item поиск максимального числа из $x_1*x_2*...*x_n$
+		
+		$q_0$ - начать работу
+		
+		$q_0$\tmsymbtwo{$\#$}{$\#$}$\to q_1$\tmsymbtwo{$\#$}{$\#$},\tmsymbtwo{$+1$}{$+1$}
+		
+		$q_1$ - скопировать первое число на верхнюю ленту
+		
+		$q_1$\tmsymbtwo{$\wedge$}{$a$}$\to q_1$\tmsymbtwo{$a$}{$a$},\tmsymbtwo{$+1$}{$+1$}
+		,$a\in\{0,1\}$
+		
+		$q_1$\tmsymbtwo{$\wedge$}{$*$}$\to q_2b$\tmsymbtwo{$\wedge$}{$*$},\tmsymbtwo{$0$}{$+1$}
+		
+		$q_1$\tmsymbtwo{$\wedge$}{$\wedge$}$\to q_7$\tmsymbtwo{$\wedge$}{$\wedge$},\tmsymbtwo{$-1$}{$-1$}
+		
+		$q_2a$ - перейти к концу числа на нижней ленте и перейти в конец верхней ленты
+		
+		$q_2a$\tmsymbtwo{$a$}{$b$}$\to q_2a$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$+1$}{$+1$}
+		,$a,b\in\{0,1\}$
+		
+		$q_2a$\tmsymbtwo{$a$}{$*$}$\to q_2a$\tmsymbtwo{$a$}{$*$},\tmsymbtwo{$+1$}{$0$}
+		,$a\in\{0,1\}$
+		
+		
+		
+		%$q_2a$\tmsymbtwo{$\#$}{$a$}$\to q_2a$\tmsymbtwo{$\#$}{$a$},\tmsymbtwo{$0$}{$+1$}
+		%,$a\in\{0,1\}$
+		
+		$q_2a$\tmsymbtwo{$\wedge$}{$*$}$\to q_2b$\tmsymbtwo{$\wedge$}{$*$},\tmsymbtwo{$0$}{$+1$}
+		
+		$q_2a$\tmsymbtwo{$\wedge$}{$\wedge$}$\to q_7$\tmsymbtwo{$\wedge$}{$\wedge$},\tmsymbtwo{$-1$}{$-1$}
+		
+		$q_2b$ - перейти к концу числа на нижней ленте
+		
+		$q_2b$\tmsymbtwo{$\wedge$}{$a$}$\to q_2b$\tmsymbtwo{$\wedge$}{$a$},\tmsymbtwo{$0$}{$+1$}
+		,$a\in\{0,1\}$
+		
+		$q_2b$\tmsymbtwo{$\wedge$}{$*$}$\to q_3$\tmsymbtwo{$\wedge$}{$*$},\tmsymbtwo{$-1$}{$-1$}
+		
+		$q_2b$\tmsymbtwo{$\wedge$}{$\wedge$}$\to q_3$\tmsymbtwo{$\wedge$}{$\wedge$},\tmsymbtwo{$-1$}{$-1$}
+		
+		$q_3$ - сравнивать текущее число на нижней ленте и число на верхней ленте
+		
+		$q_3$\tmsymbtwo{$a$}{$b$}$\to q_3$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$-1$}{$-1$}
+		,$a\geq b,a,b\in\{0,1\}$
+		
+		$q_3$\tmsymbtwo{$a$}{$b$}$\to q_4$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$-1$}{$-1$}
+		,$a < b,a,b\in\{0,1\}$
+		
+		$q_3$\tmsymbtwo{$a$}{$*$}$\to q_2a$\tmsymbtwo{$a$}{$*$},\tmsymbtwo{$+1$}{$+1$}
+		,$a\in\{0,1,\#\}$
+		
+		$q_3$\tmsymbtwo{$\#$}{$a$}$\to q_4$\tmsymbtwo{$a$}{$*$},\tmsymbtwo{$+1$}{$+1$}
+		,$a\in\{0,1\}$
+		
+		$q_4$ - идти в начало верхней ленты и начало текущего числа
+		
+		$q_4$\tmsymbtwo{$a$}{$b$}$\to q_4$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$-1$}{$-1$}
+		,$a,b\in\{0,1\}$
+		
+		$q_4$\tmsymbtwo{$\#$}{$a$}$\to q_4$\tmsymbtwo{$\#$}{$a$},\tmsymbtwo{$0$}{$-1$}
+		,$a\in\{0,1\}$
+		
+		$q_4$\tmsymbtwo{$a$}{$*$}$\to q_4$\tmsymbtwo{$a$}{$*$},\tmsymbtwo{$-1$}{$0$}
+		,$a\in\{0,1\}$
+		
+		$q_4$\tmsymbtwo{$\#$}{$*$}$\to q_1$\tmsymbtwo{$\#$}{$*$},\tmsymbtwo{$+1$}{$+1$}
+		,$a\in\{0,1\}$
+		
+		
+		$q_7$ - на верхней ленте максимальное число, вернуться в исходное положение
+		
+		$q_7$\tmsymbtwo{$a$}{$b$}$\to q_7$\tmsymbtwo{$a$}{$b$},\tmsymbtwo{$-1$}{$-1$}
+		,$a,b\in\{0,1\}$
+		
+		$q_7$\tmsymbtwo{$\#$}{$a$}$\to q_7$\tmsymbtwo{$\#$}{$a$},\tmsymbtwo{$0$}{$-1$}
+		,$a\in\{0,1\}$
+		
+		$q_7$\tmsymbtwo{$\#$}{$\#$}$\to f$\tmsymbtwo{$\#$}{$\#$},\tmsymbtwo{$0$}{$0$}
+	\end{enumerate}
+
+
+
+\end{document}
