@@ -1,0 +1,263 @@
+
+\documentclass[12pt,a4paper]{article}
+
+
+\usepackage[a4paper,margin=1in, left=10mm, top=20mm, right=10mm, bottom=20mm, nohead, nofoot]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Лемма}
+\newtheorem{proposition}{Утверждение}
+\usepackage{bussproofs}
+\pagenumbering{gobble}
+\setlength{\parskip}{1em}
+
+\newcommand{\tmsymbthree}[3]{\begin{tabular}{ | c | }
+		\hline
+		#1 \\ \hline
+		#2 \\ \hline
+		#3 \\ 
+		\hline
+	\end{tabular}}
+
+\newcommand{\tmsymbtwo}[2]{\begin{tabular}{ | c | }
+		\hline
+		#1 \\ \hline
+		#2 \\ 
+		\hline
+	\end{tabular}}
+
+\def\defaultHypSeparation{\hskip .1in}
+\def\fCenter{\ \vdash\ }
+\begin{document}
+	
+	Пусть $R$ - некоторое отношение на некотором конечном множестве размера $n$. Пусть элементы нижней ленты - закодированная таблица отношения $R$, где $[i,j]$-й элемент таблицы располагается на $n\cdot i + j$ элементов справа от $\#$ , а на второй ленте лежат $n$ символов $1$.
+	
+		Дополним алфавит $\Sigma = \{\wedge, \#, 0, 1\}$ до алфавита $\Sigma = \{\wedge, \#, 0, 1, L, R, X\}$. Перейдём от начальной конфигурации
+	
+	\begin{tabular}{ | c | c | c | c | c | c | c| }
+			\hline
+			$\#$ & $\wedge$ & $\wedge$ & $\wedge$ & $\wedge$ & $\wedge$ & $\wedge$  \\ \hline
+			$\#$ & $1$ & $...$ & $1$ & $\wedge$ & $\wedge$ & $\wedge$ \\ \hline
+			$\#$ & $a_{1,1}$ & $a_{1,2}$ & $...$ & $a_{n,n-1}$ & $a_{n,n}$ & $\wedge$ \\ 
+			\hline
+		\end{tabular}
+		
+	к конфигурации
+	
+	\begin{tabular}{ | c | c | c | c | c | c | c| }
+		\hline
+		$\#$ & $1$ & $...$ & $1$ & $\wedge$ & $\wedge$ & $\wedge$  \\ \hline
+		$\#$ & $1$ & $...$ & $1$ & $\wedge$ & $\wedge$ & $\wedge$ \\ \hline
+		$\#$ & $a_{1,1}$ & $a_{1,2}$ & $...$ & $a_{n,n-1}$ & $a_{n,n}$ & $\wedge$ \\ 
+		\hline
+	\end{tabular}
+	
+	тогда пару чисел $(i,j): (i,j \in [1,n])$ можно закодировать позицией головки на первой и второй ленте. Будем называть конфигурацию соответствующей позициии $[i,j]$, если головка первой ленты указывает на $i$-й элемент от $\#$,  головка второй ленты указывает на $j$-й элемент от $\#$, а головка третьей ленты указывает на $n\cdot i + j$-й элемент от $\#$. 
+	
+	Следующей позицией по отношению к $[i,j]$ будем называть $[i,j+1]$ если $j<n$, и $[i+1,1]$ иначе
+	
+	Предыдущей позицией по отношению к $[i,j]$ будем называть $[i,j-1]$ если $j>1$, и $[i-1,n]$ иначе
+	
+	Программа:
+	
+	$q_0$ - начать работу
+	
+	$q_0$ \tmsymbthree{$\#$}{$\#$}{$\#$} $ \to q_1$ \tmsymbthree{$\#$}{$\#$}{$\#$}, \tmsymbthree{$+1$}{$+1$}{$+1$}
+	
+	$q_1$ - копировать вторую ленту на первую
+	
+	$q_1$ \tmsymbthree{$1$}{$1$}{$\alpha$} $\to q_1$ \tmsymbthree{$1$}{$1$}{$\alpha$}, \tmsymbthree{$+1$}{$+1$}{$0$}, 
+	$\alpha \in \{1,0\}$
+	
+	$q_1$ \tmsymbthree{$\wedge$}{$\wedge$}{$\alpha$} $\to q_{1b}$ \tmsymbthree{$\wedge$}{$\wedge$}{$\alpha$}, \tmsymbthree{$+1$}{$+1$}{$0$}
+	
+	$q_{1b}$ - вернуть головки первой и второй ленты в начало
+	
+	$q_{1b}$ \tmsymbthree{$1$}{$1$}{$\alpha$} $\to q_{1b}$ \tmsymbthree{$1$}{$1$}{$\alpha$}, \tmsymbthree{$-1$}{$-1$}{$0$}, 
+	$\alpha \in \{1,0, X\}$
+
+	$q_{1b}$ \tmsymbthree{$\#$}{$\#$}{$\alpha$} $\to q_2$ \tmsymbthree{$\#$}{$\#$}{$\alpha$}, \tmsymbthree{$+1$}{$+1$}{$0$}, 
+	$\alpha \in \{1,0\}$
+	
+	$q_2$ - искать элемент отношения, с каждым шагом переходя к следуюущему элементу таблицы
+	
+	проставить $L$ маркеры, чтобы запомнить текущую позицию в таблице
+	
+	$q_2$ \tmsymbthree{$1$}{$1$}{$1$} $\to q^1_1$ \tmsymbthree{$L$}{$L$}{$1$}, \tmsymbthree{$-1$}{$-1$}{$0$} , 
+	
+	$q_2$ \tmsymbthree{$1$}{$1$}{$0$} $\to q^0_1$ \tmsymbthree{$L$}{$L$}{$1$}, \tmsymbthree{$-1$}{$-1$}{$0$} , 
+	
+	$q_2$ \tmsymbthree{$1$}{$1$}{$X$} $\to q_2$ \tmsymbthree{$1$}{$1$}{$X$}, \tmsymbthree{$0$}{$+1$}{$+1$} ,
+	
+	$q_2$ \tmsymbthree{$\alpha$}{$\wedge$}{$\beta$} $\to q_3$ \tmsymbthree{$\alpha$}{$\wedge$}{$\beta$}, \tmsymbthree{$0$}{$-1$}{$0$} ,
+	$\alpha, \beta \in \{1,0,X\}$
+	
+	$q_2$ \tmsymbthree{$\wedge$}{$1$}{$\wedge$} $\to f_1$ \tmsymbthree{$1$}{$1$}{$1$}, \tmsymbthree{$0$}{$0$}{$0$} ,
+	
+	$q_3$ - перейти с позиции $[x,n]$ на позицию $[x+1, 1]$
+	
+	$q_3$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$} $\to q_3$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$}, \tmsymbthree{$0$}{$-1$}{$0$} ,
+	$\alpha, \beta, \gamma \in \{1,0, X\}$
+	
+	$q_3$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$} $\to q_2$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	$\alpha, \beta, \gamma \in \{1,0,  X\}$
+	
+	
+	
+	$q^1_1$ - перевести головки первой и второй ленты в начало, в "память" занесено значение $1$, с ним и будет сравнено значени симметричной пары
+	
+	$q^1_1$ \tmsymbthree{$1$}{$1$}{$1$} $\to q^1_1$ \tmsymbthree{$1$}{$1$}{$1$}, \tmsymbthree{$-1$}{$-1$}{$0$} , 
+	
+	$q^1_1$ \tmsymbthree{$\wedge$}{$1$}{$1$} $\to q^1_1$ \tmsymbthree{$\wedge$}{$1$}{$1$}, \tmsymbthree{$0$}{$-1$}{$0$} , 
+	
+	$q^1_1$ \tmsymbthree{$1$}{$\wedge$}{$1$} $\to q^1_1$ \tmsymbthree{$1$}{$\wedge$}{$1$}, \tmsymbthree{$-1$}{$0$}{$0$} ,
+	
+	$q^1_1$ \tmsymbthree{$\wedge$}{$\wedge$}{$1$} $\to q^1_2$ \tmsymbthree{$\wedge$}{$\wedge$}{$1$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^1_2$ - под и над каждым $L$ маркером поставить $R$ маркер, чтобы знать на какой позиции стоит пара, которую нужно проверить, затем дойти до конца первой и второй ленты
+	
+	$q^1_2$ \tmsymbthree{$1$}{$1$}{$1$} $\to q^1_2$ \tmsymbthree{$1$}{$1$}{$1$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^1_2$ \tmsymbthree{$L$}{$1$}{$1$} $\to q^1_2$ \tmsymbthree{$L$}{$R$}{$1$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^1_2$ \tmsymbthree{$1$}{$L$}{$1$} $\to q^1_2$ \tmsymbthree{$R$}{$L$}{$1$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^1_2$ \tmsymbthree{$L$}{$L$}{$1$} $\to q_2$ \tmsymbthree{$1$}{$1$}{$1$}, \tmsymbthree{$0$}{$0$}{$0$} ,
+	
+	$q^1_2$ \tmsymbthree{$\wedge$}{$\wedge$}{$1$} $\to q^1_3$ \tmsymbthree{$\wedge$}{$\wedge$}{$1$}, \tmsymbthree{$-1$}{$-1$}{$0$} ,
+	
+	$q^1_3$ - вернуть головки первой и второй ленты к $L$ маркерам
+	
+	$q^1_3$ \tmsymbthree{$\alpha$}{$\beta$}{$1$} $\to q^1_3$ \tmsymbthree{$\alpha$}{$\beta$}{$1$}, \tmsymbthree{$-1$}{$-1$}{$0$} , 
+	$\alpha, \beta \in \{1, L, R\}$
+	
+	$q^1_3$ \tmsymbthree{$L$}{$\beta$}{$1$} $\to q^1_3$ \tmsymbthree{$L$}{$\beta$}{$1$}, \tmsymbthree{$0$}{$-1$}{$0$} , 
+	$\beta \in \{1, L, R\}$
+	
+	$q^1_3$ \tmsymbthree{$\alpha$}{$L$}{$1$} $\to q^1_3$ \tmsymbthree{$\alpha$}{$L$}{$1$}, \tmsymbthree{$-1$}{$0$}{$0$} , 
+	$\alpha \in \{1, L, R\}$
+	
+	$q^1_3$ \tmsymbthree{$L$}{$L$}{$1$} $\to q^1_5$ \tmsymbthree{$L$}{$L$}{$1$}, \tmsymbthree{$0$}{$0$}{$0$} , 
+	$\alpha \in \{1, L, R\}$
+	
+	$q^1_5$ - сдвигаться на следующую позицию, пока обе верхние головки не будут на $R$ маркерах
+	
+	$q^1_5$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$} $\to q^1_5$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$}, \tmsymbthree{$+1$}{$+1$}{$+1$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$, причём если $\alpha = \beta$, то $\alpha  \neq R$
+	
+	$q^1_5$ \tmsymbthree{$\alpha$}{$\wedge$}{$\gamma$} $\to q^1_6$ \tmsymbthree{$\alpha$}{$\wedge$}{$\gamma$}, \tmsymbthree{$0$}{$-1$}{$+1$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$
+	
+	как только дошли до $R$ маркеров пометить нижний элемент символом $X$ чтобы не проверять его ещё раз
+	
+	$q^1_5$ \tmsymbthree{$R$}{$R$}{$1$} $\to q_{ok}$ \tmsymbthree{$1$}{$1$}{$X$}, \tmsymbthree{$0$}{$0$}{$0$} , 
+	
+	$q^1_5$ \tmsymbthree{$R$}{$R$}{$0$} $\to f_0$ \tmsymbthree{$1$}{$1$}{$X$}, \tmsymbthree{$0$}{$0$}{$0$} , 
+	
+	$q^1_6$ - перейти с позиции $[x,n]$ на позицию $[x+1, 1]$
+	
+	$q^1_6$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$} $\to q^1_6$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$}, \tmsymbthree{$+1$}{$-1$}{$0$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$
+	
+	$q^1_6$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$} $\to q^1_5$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$}, \tmsymbthree{$0$}{$+1$}{$0$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$
+	
+	$q^0_1$ - перевести головки первой и второй ленты в начало, в "память" занесено значение $0$, с ним и будет сравнено значени симметричной пары
+	
+	$q^0_1$ \tmsymbthree{$1$}{$1$}{$0$} $\to q^0_1$ \tmsymbthree{$1$}{$1$}{$0$}, \tmsymbthree{$-1$}{$-1$}{$0$} , 
+	
+	$q^0_1$ \tmsymbthree{$\wedge$}{$1$}{$0$} $\to q^0_1$ \tmsymbthree{$\wedge$}{$1$}{$0$}, \tmsymbthree{$0$}{$-1$}{$0$} , 
+	
+	$q^0_1$ \tmsymbthree{$1$}{$\wedge$}{$0$} $\to q^0_1$ \tmsymbthree{$1$}{$\wedge$}{$0$}, \tmsymbthree{$-1$}{$0$}{$0$} ,
+	
+	$q^0_1$ \tmsymbthree{$\wedge$}{$\wedge$}{$0$} $\to q^0_2$ \tmsymbthree{$\wedge$}{$\wedge$}{$0$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^0_2$ - под и над каждым $L$ маркером поставить $R$ маркер, чтобы знать на какой позиции стоит пара, которую нужно проверить, затем дойти до конца первой и второй ленты
+	
+	$q^0_2$ \tmsymbthree{$1$}{$1$}{$0$} $\to q^0_2$ \tmsymbthree{$1$}{$1$}{$0$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^0_2$ \tmsymbthree{$L$}{$1$}{$0$} $\to q^0_2$ \tmsymbthree{$L$}{$R$}{$0$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^0_2$ \tmsymbthree{$1$}{$L$}{$0$} $\to q^0_2$ \tmsymbthree{$R$}{$L$}{$0$}, \tmsymbthree{$+1$}{$+1$}{$0$} ,
+	
+	$q^0_2$ \tmsymbthree{$L$}{$L$}{$0$} $\to q_2$ \tmsymbthree{$1$}{$1$}{$0$}, \tmsymbthree{$0$}{$0$}{$0$} ,
+	
+	$q^0_2$ \tmsymbthree{$\wedge$}{$\wedge$}{$0$} $\to q^0_3$ \tmsymbthree{$\wedge$}{$\wedge$}{$0$}, \tmsymbthree{$-1$}{$-1$}{$0$} ,
+	
+	$q^0_3$ - вернуть головки первой и второй ленты к $L$ маркерам
+	
+	$q^0_3$ \tmsymbthree{$\alpha$}{$\beta$}{$0$} $\to q^0_3$ \tmsymbthree{$\alpha$}{$\beta$}{$0$}, \tmsymbthree{$-1$}{$-1$}{$0$} , 
+	$\alpha, \beta \in \{1, L, R\}$
+	
+	$q^0_3$ \tmsymbthree{$L$}{$\beta$}{$0$} $\to q^0_3$ \tmsymbthree{$L$}{$\beta$}{$0$}, \tmsymbthree{$0$}{$-1$}{$0$} , 
+	$\beta \in \{1, L, R\}$
+	
+	$q^0_3$ \tmsymbthree{$\alpha$}{$L$}{$0$} $\to q^0_3$ \tmsymbthree{$\alpha$}{$L$}{$0$}, \tmsymbthree{$-1$}{$0$}{$0$} , 
+	$\alpha \in \{1, L, R\}$
+	
+	$q^0_3$ \tmsymbthree{$L$}{$L$}{$0$} $\to q^0_5$ \tmsymbthree{$L$}{$L$}{$0$}, \tmsymbthree{$0$}{$0$}{$0$} , 
+	$\alpha \in \{1, L, R\}$
+	
+	$q^0_5$ - сдвигаться на следующую позицию, пока обе верхние головки не будут на $R$ маркерах
+	
+	$q^0_5$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$} $\to q^0_5$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$}, \tmsymbthree{$+1$}{$+1$}{$+1$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$, причём если $\alpha = \beta$, то $\alpha  \neq R$
+	
+	$q^0_5$ \tmsymbthree{$\alpha$}{$\wedge$}{$\gamma$} $\to q^0_6$ \tmsymbthree{$\alpha$}{$\wedge$}{$\gamma$}, \tmsymbthree{$0$}{$-1$}{$+1$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$
+	
+	как только дошли до $R$ маркеров пометить нижний элемент символом $X$ чтобы не проверять его ещё раз
+	
+	$q^0_5$ \tmsymbthree{$R$}{$R$}{$1$} $\to q_0$ \tmsymbthree{$1$}{$1$}{$X$}, \tmsymbthree{$0$}{$0$}{$0$} , 
+	
+	$q^0_5$ \tmsymbthree{$R$}{$R$}{$0$} $\to q_{ok}$ \tmsymbthree{$1$}{$1$}{$X$}, \tmsymbthree{$0$}{$0$}{$0$} , 
+	
+	$q^0_6$ - перейти с позиции $[x,n]$ на позицию $[x+1, 1]$
+	
+	$q^0_6$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$} $\to q^0_6$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$}, \tmsymbthree{$0$}{$-1$}{$0$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$
+	
+	$q^0_6$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$} $\to q^0_5$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$}, \tmsymbthree{$+1$}{$+1$}{$0$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, R, X\}$
+	
+	
+	$q_{ok}$ - вернуться в позицию, обозначенную $L$ маркерами
+	
+	$q_{ok}$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$} $\to q_{ok}$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$}, \tmsymbthree{$-1$}{$-1$}{$-1$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, X\}$, причём если $\alpha = \beta$, то $\alpha  \neq L$
+	
+	$q_{ok}$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$} $\to q_{ok}'$ \tmsymbthree{$\alpha$}{$\#$}{$\gamma$}, \tmsymbthree{$-1$}{$+1$}{$-1$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, X\}$
+	
+	
+	перейти на следующую позицию и начать проверять новую пару
+	
+	$q_{ok}$ \tmsymbthree{$L$}{$L$}{$\alpha$} $\to q_2$ \tmsymbthree{$1$}{$1$}{$\alpha$}, \tmsymbthree{$0$}{$+1$}{$+1$} , 
+	$\alpha \in \{1,0\}$
+	
+	$q_{ok}'$ - перейти с позиции $[x,n]$ на позицию $[x-1, 1]$
+	
+	$q_{ok}'$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$} $\to q_{ok}'$ \tmsymbthree{$\alpha$}{$\beta$}{$\gamma$}, \tmsymbthree{$0$}{$+1$}{$0$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, X\}$
+	
+	$q_{ok}'$ \tmsymbthree{$\alpha$}{$\wedge$}{$\gamma$} $\to q_{ok}$ \tmsymbthree{$\alpha$}{$\wedge$}{$\gamma$}, \tmsymbthree{$0$}{$-1$}{$0$} , 
+	$\alpha, \beta, \gamma \in \{1,0, L, X\}$
+	
+	$f_0$ - симметричность опровергнута, вернуть все головки в начало и перейти в состояние $0!$
+	
+	$f_1$ - симметричность подтверждена, вернуть все головки в начало и перейти в состояние $1!$
+	
+
+	
+	
+		
+		
+		
+		
+		
+		
+
+\end{document}
